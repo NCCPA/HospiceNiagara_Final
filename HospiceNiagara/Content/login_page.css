@@ -4,14 +4,28 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    
 }
 
 body {
     background:none;
 }
 
+.form-control {
+    border:1px solid #282828;
+}
+
+.form-control:focus {
+    border:1px solid #1c90d3;
+}
+
 #login-content {
     margin-top:175px;
-    background-color:rgba(255,255,255,0.9);
+    background-color:#375a7f;
     padding:2%;
+}
+
+.btn {
+    background-color:#222222;
+    border-color:#222222;
 }
