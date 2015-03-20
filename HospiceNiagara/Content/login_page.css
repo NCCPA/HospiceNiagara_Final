@@ -12,11 +12,11 @@ body {
 }
 
 .form-control {
-    border:1px solid #282828;
+   
 }
 
 .form-control:focus {
-    border:1px solid #1c90d3;
+    
 }
 
 #login-content {
@@ -25,7 +25,17 @@ body {
     padding:2%;
 }
 
-.btn {
-    background-color:#222222;
-    border-color:#222222;
+.glyphicon {
+        top: 0;
+        color:#555555;
+}
+
+.input-group[class*="col-"] {  
+    padding-left:15px !important;
+    padding-right:15px !important;
+}
+
+
+input {
+    max-width:none;
 }

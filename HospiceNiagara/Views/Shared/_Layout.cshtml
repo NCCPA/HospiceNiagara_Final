@@ -11,77 +11,55 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
     @if (User.Identity.IsAuthenticated)
     {
-
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid navbar-container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <ul class="nav navbar-nav">
-                        <li class="sidebar-toggle">
-                            <a href="#menu-toggle" class="btn btn-default btn-sm" id="menu-toggle">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                        </li>
-                    </ul>
-                    @Html.ActionLink("Hospice Niagara", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-
-                        <li><a href="@Url.Action("Index", "Admin")">Admin</a></li>
-                        <li>@Html.ActionLink("Home", "About", "Home")</li>
-                        <li>@Html.ActionLink("My Hospice", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </div>
-        <!-- Left Side Bar-->
-
+       
         <div id="wrapper">
-
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
-                    <li class="sidebar-brand">
-                        <a href="#">
-                            @ViewBag.Title
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">Members</a>
-                        <ul>
-                            <li><a href="#">test</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Contacts</a>
-                    </li>
-                    <li>
-                        <a href="#">Resources </a>
-                    </li>
-                    <li>
-                        <a href="#">Meetings </a>
-                    </li>
-                    <li>
-                        <a href="#">Deaths</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Schedule</a>
-                    </li>
+                    <li class="sidebar-title">
+                        Hospice Niagara
+                    </li>    
+                    <li class="sidebar-divider">
+                        Profile
+                    </li>      
+                    <li>&ensp;</li>         
+                    <li>&ensp;</li>         
+                    <li>&ensp;</li>    
+                    <li class="sidebar-divider">Navigation</li>              
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">My Hospice</a></li>
+                    <li><a href="#">Admin</a></li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
             <!--/End of Side Bar-->
-            
+            <div class="navbar navbar-inverse">
+                <div class="container-fluid navbar-container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <ul class="nav navbar-nav">
+                            <li class="sidebar-toggle">
+                                <a href="#menu-toggle" class="btn btn-default btn-sm" id="menu-toggle">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <div class="navbar-collapse collapse">                        
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+            <!-- Left Side Bar-->
             <!--Content of Page-->
             <!-- Page Content -->
             <div id="page-content-wrapper">

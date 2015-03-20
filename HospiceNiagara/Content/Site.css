@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -51,7 +50,7 @@ textarea {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #0B1726;
+    background: #375a7f;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -82,7 +81,7 @@ textarea {
     margin: 0;
     padding: 0;
     list-style: none;
-    padding-top:10px;
+    
 }
 
 .sidebar-nav li {
@@ -92,6 +91,7 @@ textarea {
 
 .sidebar-nav li a {
     display: block;
+    font-size:18px;
     text-decoration: none;
     color: #ffffff;
 }
@@ -122,7 +122,16 @@ textarea {
     background: none;
 }
 
+.sidebar-title {
+    font-size:28px;
+    padding-top:6px;
+    padding-bottom:6px;
+    color:white;
+}
 
+.sidebar-divider {
+    background: rgba(255,255,255,0.4);
+}
 
 @media(min-width:768px) {
     #wrapper {
@@ -152,6 +161,9 @@ textarea {
     }
 }
 
+/* @End of Side Bar*/
+
+
 
 /* Nav Bar Hover Color*/
 .navbar-default .navbar-nav > li > a:hover, 
@@ -159,26 +171,29 @@ textarea {
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus 
 {    
-    color: #0B1726;
+    color: #0B1726;    
 }
 
 #menu-toggle:hover {
-    border-color:#375a7f;
+    border-color:#2780e3;
     color:#0B1726;  
 }
 
 #menu-toggle:focus {
-    border-color:#375a7f;
+    border-color:#2780e3;
     color:white;
 }
 
 #menu-toggle {
     margin-right:15px;
     border-radius:0px;
-    background-color:#375a7f;
-    border-color:#375a7f;
+    border:none;
+    background-color:#2780e3;
+    border-color:#2780e3;
+    margin-top:0px;
+    margin-bottom:0px;
 }
-
+/*375a7f*/
 .navbar-container {
     padding-left:0px;
 }
