@@ -13,6 +13,7 @@
 <body>
     @if (User.Identity.IsAuthenticated)
     {
+
         <div class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid navbar-container">
                 <div class="navbar-header">
@@ -42,7 +43,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Left Side Bar-->
 
         <div id="wrapper">
@@ -57,6 +57,9 @@
                     </li>
                     <li>
                         <a href="#">Members</a>
+                        <ul>
+                            <li><a href="#">test</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#">Contacts</a>
@@ -78,6 +81,7 @@
             </div>
             <!-- /#sidebar-wrapper -->
             <!--/End of Side Bar-->
+            
             <!--Content of Page-->
             <!-- Page Content -->
             <div id="page-content-wrapper">
@@ -90,9 +94,6 @@
                 </div>
             </div>
             <!-- /#page-content-wrapper -->
-
-
-
         </div>
 
     }
