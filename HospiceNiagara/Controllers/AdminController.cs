@@ -47,6 +47,21 @@ namespace HospiceNiagara.Controllers
             return View(viewModel.ToList());
         }
 
+        //Get View: Members
+        [HttpGet]
+        public ActionResult Members_View(string id)
+        {
+            //Check to make sure there is an ID sent
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ApplicationUser user = db.Users.Find(id);
+
+            return View(user);
+        }
+
         //Get Edit: Members
         [HttpGet]
         public ActionResult Members_Edit(string id)
@@ -74,6 +89,26 @@ namespace HospiceNiagara.Controllers
             }
             return View(user);
             
+        }
+
+        //GET Delete: Member        
+        [HttpGet]
+        public ActionResult Members_Delete(string id)
+        {            
+            ApplicationUser user = db.Users.Find(id);            
+            return View(user);
+        }
+
+        //Post Delete: Member
+        // POST: /Movies/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Members_Delete_Post(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Members_List");
         }
 
 

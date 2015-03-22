@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Members_List", "Admin", FormMethod.Get))
 {
     <p>
-        <label for="SearchString" class="control-label">Title: </label>
+        <label for="SearchString" class="control-label">Search:</label>
         @Html.TextBox("SearchString", null, new { @class = "form-control" }) <br />
         <input type="submit" value="Filter" class="btn btn-default" />
     </p>
@@ -20,7 +20,7 @@
 <p>
     <a href="@Url.Action("Register","Account")" class="btn btn-primary">Add Member</a>
 </p>
-<table class="table">
+<table class="table table-condensed table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -46,8 +46,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Bio)
         </th>
-        <th></th>
-        <th>ID</th>
+        <th>Controls</th>
     </tr>
 
     @foreach (var item in Model)
@@ -88,9 +87,6 @@
                 @Html.ActionLink("Edit", "Members_Edit", new { id = item.id }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Details", "Members_View", new { id = item.id }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Delete", "Members_Delete", new { id = item.id }, new { @class = "btn btn-default" })
-            </td>
-            <td>
-                @item.id
             </td>
         </tr>
     }
