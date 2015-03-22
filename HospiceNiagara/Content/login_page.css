@@ -39,3 +39,11 @@ body {
 input {
     max-width:none;
 }
+@media (min-width: 992px) {
+    .login-email {
+        margin-bottom: 0px !important;
+    }
+}
+h2 {
+    color:white;
+}

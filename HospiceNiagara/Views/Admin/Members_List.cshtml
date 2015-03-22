@@ -1,0 +1,86 @@
+﻿@model IEnumerable<HospiceNiagara.Models.ViewModels.MemberViewModel>
+
+@{
+    ViewBag.Title = "Members";
+}
+
+<h2>Members</h2>
+<hr />
+<!-- Search Field Here -->
+@using (Html.BeginForm("Members_List","Admin",FormMethod.Get))
+{
+    <p>
+        <label for="SearchString" class="control-label">Title: </label> 
+        @Html.TextBox("SearchString", null, new { @class="form-control"}) <br />
+        <input type="submit" value="Filter" class="btn btn-default"/>
+    </p>
+}
+ 
+<!-- End of Search Field -->
+<p>
+    <a href="@Url.Action("Register","Account")" class="btn btn-primary">Add Member</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneExt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsContact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.Bio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneExt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsContact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.Bio)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Members_Edit", new { id = item.id }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Details", "Members_View", new { id = item.id }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Delete", "Members_Delete", new { id = item.id }, new { @class = "btn btn-default" })
+        </td>
+    </tr>
+}
+
+</table>

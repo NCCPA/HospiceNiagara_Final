@@ -165,9 +165,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503182238574_InitialCreate.cs" />
+    <Compile Include="Migrations\201503182238574_InitialCreate.Designer.cs">
+      <DependentUpon>201503182238574_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503221709095_Added-Users-Information.cs" />
+    <Compile Include="Migrations\201503221709095_Added-Users-Information.Designer.cs">
+      <DependentUpon>201503221709095_Added-Users-Information.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503221712505_removed-duplicate-email-user.cs" />
+    <Compile Include="Migrations\201503221712505_removed-duplicate-email-user.Designer.cs">
+      <DependentUpon>201503221712505_removed-duplicate-email-user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503221717203_removed-duplicate-phonenumber-user.cs" />
+    <Compile Include="Migrations\201503221717203_removed-duplicate-phonenumber-user.Designer.cs">
+      <DependentUpon>201503221717203_removed-duplicate-phonenumber-user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModels\MemberViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -239,15 +257,29 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_SideNavigation.cshtml" />
+    <Content Include="Views\Admin\Members_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\DatabaseModels\" />
-    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503182238574_InitialCreate.resx">
+      <DependentUpon>201503182238574_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503221709095_Added-Users-Information.resx">
+      <DependentUpon>201503221709095_Added-Users-Information.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503221712505_removed-duplicate-email-user.resx">
+      <DependentUpon>201503221712505_removed-duplicate-email-user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503221717203_removed-duplicate-phonenumber-user.resx">
+      <DependentUpon>201503221717203_removed-duplicate-phonenumber-user.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

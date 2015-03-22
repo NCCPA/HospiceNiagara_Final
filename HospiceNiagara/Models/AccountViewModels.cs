@@ -79,6 +79,33 @@ namespace HospiceNiagara.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Fist Name Cannot be empty")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name cannot be empty")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Phone Extension")]
+        public string PhoneExt { get; set; }
+
+        [Display(Name = "View in Contacts")]
+        public bool IsContact { get; set; }
+
+        [Display(Name = "Position Title")]
+        public string Position { get; set; }
+
+        [Display(Name = "Position Description")]
+        public string PositionDescription { get; set; }
+
+        [Display(Name = "Bio")]
+        [StringLength(250, ErrorMessage = "Bio Cannot be More than 250 Charactes")]
+        public string Bio { get; set; }
     }
 
     public class ResetPasswordViewModel

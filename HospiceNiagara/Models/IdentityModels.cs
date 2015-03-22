@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 
 namespace HospiceNiagara.Models
 {
@@ -16,6 +17,36 @@ namespace HospiceNiagara.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        //Member Additional Information
+        [Required(ErrorMessage="Fist Name Cannot be empty")]
+        [Display(Name="First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage="Last Name cannot be empty")]
+        [Display(Name="Last Name")]
+        public string LastName { get; set; }        
+
+        [Display(Name="Phone Extension")]
+        public string PhoneExt { get; set; }
+
+        [Display(Name = "View in Contacts")]
+        public bool IsContact { get; set; }
+
+        [Display(Name = "Position Title")]
+        public string Position { get; set; }
+
+        [Display(Name = "Position Description")]
+        public string PositionDescription { get; set; }
+
+        [Display(Name = "Bio")]
+        [StringLength(250, ErrorMessage = "Bio Cannot be More than 250 Charactes")]
+        public string Bio { get; set; }
+
+        //Fields for Profile Picture
+        public byte[] ProfilePicture { get; set; }
+        public string MimeType { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +60,6 @@ namespace HospiceNiagara.Models
         {
             return new ApplicationDbContext();
         }
+        
     }
 }

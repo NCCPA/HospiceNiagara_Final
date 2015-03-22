@@ -19,9 +19,9 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger col-md-offset-1" })
 
                     <!-- E-mail with icon-->
-                <div class="form-group">
+                <div class="form-group login-email">
                     <div class="error-message">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger col-md-offset-2 " })</div>
-                    <div class="input-group col-md-10 col-md-offset-1 col-sm-offset-1 col-sm-10">
+                    <div class="input-group col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10" style="padding-bottom:0px !important;">
                         <span class="input-group-addon glyphicon glyphicon-envelope"></span>
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "E-Mail" })
                     </div>
@@ -30,7 +30,7 @@
                 <!--Password with icon-->
                 <div class="form-group">
                     <div class="error-message">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger col-md-offset-2 " })</div>
-                    <div class="col-md-10 col-md-offset-1 col-sm-offset-1 col-sm-10">
+                    <div class="col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-lock"></span>
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
@@ -39,14 +39,14 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                         <input type="submit" value="Log in" class="btn btn-block  btn-default" />
                     </div>
                 </div>
 
 
                 <div class="form-group">
-                    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                         <input type="button" value="Forgotten Password" class="btn btn-block btn-default" />
                     </div>
                 </div>
