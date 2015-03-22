@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using HospiceNiagara.Models.DatabaseModels;
 
 namespace HospiceNiagara.Models
 {
@@ -60,6 +61,9 @@ namespace HospiceNiagara.Models
         {
             return new ApplicationDbContext();
         }
+
+        //DataBase Models
+        public DbSet<Announcement> Announcements { get; set; }
         
     }
 }

@@ -2,7 +2,11 @@
 using HospiceNiagara.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -26,11 +30,13 @@ namespace HospiceNiagara.Controllers
             var viewModel = from m in db.Users
                             select new MemberViewModel
                             {
+                                id = m.Id,
                                 FirstName = m.FirstName,
                                 LastName = m.LastName,
                                 PhoneNumber = m.PhoneNumber,
                                 PhoneExt = m.PhoneExt,
-                                Email = m.Email
+                                Email = m.Email,
+                                IsContact = m.IsContact
                             };
 
             if (!String.IsNullOrEmpty(searchString))
@@ -39,6 +45,63 @@ namespace HospiceNiagara.Controllers
             }
 
             return View(viewModel.ToList());
+        }
+
+        //Get Edit: Members
+        [HttpGet]
+        public ActionResult Members_Edit(string id)
+        {
+            //Check to make sure there is an ID sent
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ApplicationUser user = db.Users.Find(id);
+
+            return View(user);
+        }
+
+        //Post Edit: Members
+        [HttpPost]
+        public ActionResult Members_Edit([Bind(Include = "id, UserName, FirstName,LastName,Email,PhoneNumber,PhoneExt,isContact, Position, PositionDescription, Bio")] ApplicationUser user)
+        {
+            if(ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                SaveChanges(db);
+                return RedirectToAction("Members_List");
+            }
+            return View(user);
+            
+        }
+
+
+        private void SaveChanges(DbContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                ); // Add the original exception as the innerException
+            }
         }
 
     }

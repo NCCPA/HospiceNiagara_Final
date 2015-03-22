@@ -181,8 +181,14 @@
     <Compile Include="Migrations\201503221717203_removed-duplicate-phonenumber-user.Designer.cs">
       <DependentUpon>201503221717203_removed-duplicate-phonenumber-user.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503222018559_added_Announcements.cs" />
+    <Compile Include="Migrations\201503222018559_added_Announcements.Designer.cs">
+      <DependentUpon>201503222018559_added_Announcements.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DatabaseModels\Announcement.cs" />
+    <Compile Include="Models\ViewModels\AnnouncementViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\MemberViewModel.cs" />
@@ -258,10 +264,10 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_SideNavigation.cshtml" />
     <Content Include="Views\Admin\Members_List.cshtml" />
+    <Content Include="Views\Admin\Members_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DatabaseModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -279,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503221717203_removed-duplicate-phonenumber-user.resx">
       <DependentUpon>201503221717203_removed-duplicate-phonenumber-user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503222018559_added_Announcements.resx">
+      <DependentUpon>201503222018559_added_Announcements.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
