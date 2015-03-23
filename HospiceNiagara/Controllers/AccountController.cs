@@ -148,7 +148,7 @@ namespace HospiceNiagara.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

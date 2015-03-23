@@ -64,6 +64,10 @@ namespace HospiceNiagara.Models
 
         //DataBase Models
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Deaths> Deaths { get; set; }
+        
+
+        
         
     }
 }

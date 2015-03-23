@@ -159,7 +159,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminAnnouncementsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminDeathsController.cs" />
+    <Compile Include="Controllers\AdminMembersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -185,9 +188,14 @@
     <Compile Include="Migrations\201503222018559_added_Announcements.Designer.cs">
       <DependentUpon>201503222018559_added_Announcements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503230257574_Added-Deaths-to-DB.cs" />
+    <Compile Include="Migrations\201503230257574_Added-Deaths-to-DB.Designer.cs">
+      <DependentUpon>201503230257574_Added-Deaths-to-DB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
+    <Compile Include="Models\DatabaseModels\Deaths.cs" />
     <Compile Include="Models\ViewModels\AnnouncementViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -267,6 +275,21 @@
     <Content Include="Views\Admin\Members_Edit.cshtml" />
     <Content Include="Views\Admin\Members_View.cshtml" />
     <Content Include="Views\Admin\Members_Delete.cshtml" />
+    <Content Include="Views\AdminMembers\Create.cshtml" />
+    <Content Include="Views\AdminMembers\Delete.cshtml" />
+    <Content Include="Views\AdminMembers\Details.cshtml" />
+    <Content Include="Views\AdminMembers\Edit.cshtml" />
+    <Content Include="Views\AdminMembers\Index.cshtml" />
+    <Content Include="Views\AdminAnnouncements\Create.cshtml" />
+    <Content Include="Views\AdminAnnouncements\Delete.cshtml" />
+    <Content Include="Views\AdminAnnouncements\Details.cshtml" />
+    <Content Include="Views\AdminAnnouncements\Edit.cshtml" />
+    <Content Include="Views\AdminAnnouncements\Index.cshtml" />
+    <Content Include="Views\AdminDeaths\Create.cshtml" />
+    <Content Include="Views\AdminDeaths\Delete.cshtml" />
+    <Content Include="Views\AdminDeaths\Details.cshtml" />
+    <Content Include="Views\AdminDeaths\Edit.cshtml" />
+    <Content Include="Views\AdminDeaths\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503222018559_added_Announcements.resx">
       <DependentUpon>201503222018559_added_Announcements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503230257574_Added-Deaths-to-DB.resx">
+      <DependentUpon>201503230257574_Added-Deaths-to-DB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
