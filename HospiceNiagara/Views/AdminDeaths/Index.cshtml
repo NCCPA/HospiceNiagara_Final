@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Deaths>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Deaths";
 }
 
-<h2>Index</h2>
-
+<h2>Deaths</h2>
+<hr />
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -53,9 +53,9 @@
             @Html.DisplayFor(modelItem => item.CreatedByID)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default" })
         </td>
     </tr>
 }

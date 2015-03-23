@@ -33,6 +33,32 @@ namespace HospiceNiagara.Migrations
             };
             announcement.ForEach(a => context.Announcements.AddOrUpdate(x => x.ID, a));
             context.SaveChanges();
+
+
+            //Deaths
+            var Death = new List<Deaths> 
+            { 
+               new Deaths { Name="Joe Smith", Date = Convert.ToDateTime("2014-12-16"), Location = "Community Client", Note = "Volunteer: Ted Tennant", Visible= true},
+               new Deaths { Name="Rachel Jones", Date = Convert.ToDateTime("2015-12-14"), Location = "The Stabler Centre", Note = "Room 4", Visible=true},
+               new Deaths { Name="Mary Brown", Date = Convert.ToDateTime("2015-12-08"), Location = "NN Outreach Team", Note = "", Visible=true},
+               new Deaths { Name="Sally Williams", Date = Convert.ToDateTime("2015-11-30"), Location = "NS Outreach Team", Note = "", Visible=true}
+            };            
+            Death.ForEach(d => context.Deaths.AddOrUpdate(x => x.Name, d));
+            context.SaveChanges();
+
+            //Add Meetings
+            var meetings = new List<Meetings>
+            {
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"},
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"},
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"},
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"},
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"},
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"},
+                new Meetings { Date = DateTime.Today, Name = "Heart Day", Description = "Doctors and spiritual leaders meeting", StartTime="10:00 AM", EndTime="1:30 PM"}
+            };
+            meetings.ForEach(a => context.Meetings.AddOrUpdate(x => x.ID, a));
+            context.SaveChanges();
         }
     }
 }

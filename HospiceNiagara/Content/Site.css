@@ -359,4 +359,12 @@ body {
 hr {
     border-top:1px solid #0B1726;
 }
+
+.nav-link,
+.nav-link:hover,
+.nav-link:focus {
+    color:white;
+    text-decoration:none;
+}
+
 /*End of new Sidebar Style*/

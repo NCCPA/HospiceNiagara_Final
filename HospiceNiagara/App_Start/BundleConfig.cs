@@ -10,6 +10,8 @@ namespace HospiceNiagara
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-1.11.4.js",
+                        "~/Scripts/jquery.timepicker.js",
                         "~/Scripts/custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -26,6 +28,10 @@ namespace HospiceNiagara
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/jquery.timepicker.css",
+                      "~/Content/themes/base/datepicker.css",
+                      "~/Content/themes/base/theme.css",
+                      "~/Content/themes/base/core.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

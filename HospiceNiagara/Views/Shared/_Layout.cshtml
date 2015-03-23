@@ -52,10 +52,10 @@
                     <a href="#"><i class="fa fa-dashboard fa-lg"></i> Admin <span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="admin">
-                    <li><a href="@Url.Action("Index","AdminMembers")">Members</a></li>
+                    <a href="@Url.Action("Index","AdminMembers")" class="nav-link"><li>Members</li></a>
                     <li>Resources</li>
                     <li><a href="@Url.Action("Index","AdminAnnouncements")">Announcements</a></li>
-                    <li>Meetings</li>
+                    <a href="@Url.Action("Index","AdminMeetings")" class="nav-link"><li>Meetings</li></a>
                     <li><a href="@Url.Action("Index","AdminDeaths")">Deaths</a></li>
                     <li>Schedule</li>
                 </ul>
