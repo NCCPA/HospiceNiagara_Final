@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HospiceNiagara.Models;
 using HospiceNiagara.Models.DatabaseModels;
+using PagedList;
 
 namespace HospiceNiagara.Controllers
 {
@@ -16,9 +17,41 @@ namespace HospiceNiagara.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminMeetings
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Meetings.ToList());
+
+            //Set Sort Order
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            //Grab all Meetings
+            var meetings = from m in db.Meetings
+                           select m;
+
+            //Filter
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                meetings = meetings.Where(m => m.Name.Contains(searchString));
+            }
+
+            //Switch to See what sorting we are going to do
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    meetings = meetings.OrderByDescending(m => m.Name);
+                    break;
+                case "Date":
+                    meetings = meetings.OrderBy(m => m.Date);
+                    break;
+                case "date_desc":
+                    meetings = meetings.OrderByDescending(m => m.Date);
+                    break;
+                default:
+                    meetings = meetings.OrderBy(m => m.Name);
+                    break;
+            }
+
+            return View(meetings.ToList());
         }
 
         // GET: AdminMeetings/Details/5

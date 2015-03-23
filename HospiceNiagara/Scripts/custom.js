@@ -16,7 +16,7 @@
    {
        $('input[type=date]').datepicker({
            // Consistent format with the HTML5 picker
-           dateFormat: 'yy-mm-dd'
+           dateFormat: 'yy/mm/dd'
        });       
    }
 });
