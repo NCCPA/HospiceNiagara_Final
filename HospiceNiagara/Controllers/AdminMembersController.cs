@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HospiceNiagara.Models;
 using HospiceNiagara.Models.ViewModels;
+using PagedList;
 
 namespace HospiceNiagara.Controllers
 {
@@ -16,9 +17,57 @@ namespace HospiceNiagara.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminMembers
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Users.ToList());
+
+            //Set Sort Order
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "LastName" ? "lname_desc" : "LastName";
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            //Grab all Meetings
+            var users = from m in db.Users
+                           select m;
+
+            //Filter
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(m => m.FirstName.Contains(searchString) || m.LastName.Contains(searchString));
+            }
+
+            //Switch to See what sorting we are going to do
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    users = users.OrderByDescending(m => m.FirstName);
+                    break;
+                case "LastName":
+                    users = users.OrderBy(m => m.LastName);
+                    break;
+                case "lname_desc":
+                    users = users.OrderByDescending(m => m.LastName);
+                    break;
+                default:
+                    users = users.OrderBy(m => m.FirstName);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(users.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: AdminMembers/Details/5

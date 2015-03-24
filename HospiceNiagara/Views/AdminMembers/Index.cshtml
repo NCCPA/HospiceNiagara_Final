@@ -1,44 +1,48 @@
-﻿@model IEnumerable<HospiceNiagara.Models.ApplicationUser>
-
+﻿@model PagedList.IPagedList<HospiceNiagara.Models.ApplicationUser>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Members</h2>
+<hr />
+<!--Search-->
+@using (Html.BeginForm("Index", "AdminMembers", FormMethod.Get))
+{
+    <p>
+        <div class="form-inline">
+            <label class="control-label">Search by Member:</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <input type="submit" value="Search" class="btn btn-warning" />
+        </div>
+    </p>
+}
+<!-- /End of search-->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+           @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            E-Mail
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Phone Number
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneExt)
+            Phone Extension
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsContact)
+            Contact
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Position)
+            Position Title
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PositionDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bio)
-        </th>
-        <th></th>
+        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-block" })</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -59,23 +63,29 @@
             @Html.DisplayFor(modelItem => item.PhoneExt)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsContact)
+            @if(item.IsContact)
+            {
+                <p>Yes</p>
+            }
+            else
+            {
+                <p>No</p>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Position)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PositionDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { Id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { Id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { Id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { Id = item.Id }, new { @class = "btn btn-default col-md-4" }) 
+            @Html.ActionLink("Details", "Details", new { Id=item.Id }, new { @class = "btn btn-default col-md-4" }) 
+            @Html.ActionLink("Delete", "Delete", new { Id = item.Id }, new { @class = "btn btn-default col-md-4" })
         </td>
     </tr>
 }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

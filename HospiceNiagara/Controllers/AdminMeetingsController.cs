@@ -64,7 +64,7 @@ namespace HospiceNiagara.Controllers
                     break;
             }
 
-            int pageSize = 20;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
 
             return View(meetings.ToPagedList(pageNumber,pageSize));
