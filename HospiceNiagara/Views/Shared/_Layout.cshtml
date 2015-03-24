@@ -23,13 +23,18 @@
 
             <ul id="menu-content" class="menu-content collapse out">
 
-                <li data-toggle="collapse" data-target="#profile" class="collapsed">
-                    <a href="#"><i class="fa fa-user fa-lg"></i> Profile <span class="arrow"></span></a>
+                <li class="navbar-divider">
+                    <a href="#"><i class="fa fa-user fa-lg"></i> Profile</a>
                 </li>
-                <li class="sub-menu collapse" id="profile">
+                
                    @Html.Partial("_LoginPartial")
-                </li>
+          
+               
 
+                <li class="navbar-divider">
+                    <a href="#"><i class="fa fa-paper-plane-o fa-lg"></i> Navigation </a>
+                </li>
+                
                 <li class="active">
                     <a href="#">
                         <i class="fa fa-home fa-lg"></i> Home

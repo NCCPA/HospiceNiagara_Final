@@ -367,4 +367,22 @@ hr {
     text-decoration:none;
 }
 
+.profilePic {
+    max-height: 150px; 
+    width:50%;
+    margin:0 auto;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.navbar-divider {
+    text-align:center;
+}
+
+.navbar-divider:hover {
+    border-left:solid 3px #2e353d !important;
+    background-color:#2e353d !important;
+}
+
+
 /*End of new Sidebar Style*/
