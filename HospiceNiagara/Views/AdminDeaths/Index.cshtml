@@ -1,35 +1,44 @@
-﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Deaths>
-
+﻿@model  PagedList.IPagedList<HospiceNiagara.Models.DatabaseModels.Deaths>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Deaths";
 }
 
 <h2>Deaths</h2>
 <hr />
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
-</p>
+
+@using (Html.BeginForm("Index", "AdminDeaths", FormMethod.Get))
+{
+    <p>
+        <div class="form-inline">
+            <label class="control-label">Search by Name :</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <input type="submit" value="Search" class="btn btn-warning" />
+        </div>
+    </p>
+}
+<!-- /End of search-->
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Location)
+            Location
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Note)
+           Note
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Visible)
+            Visible
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedByID)
+            Posted By
         </th>
-        <th></th>
+        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-block" })</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -47,17 +56,29 @@
             @Html.DisplayFor(modelItem => item.Note)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Visible)
+            @if(item.Visible)
+            {
+                <p>Yes</p>
+            }
+            else
+            {
+                <p>No</p>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedByID)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default" }) 
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default col-md-4" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default col-md-4" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default col-md-4" })
         </td>
     </tr>
 }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
