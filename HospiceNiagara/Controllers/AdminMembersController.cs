@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HospiceNiagara.Models;
+using HospiceNiagara.Models.ViewModels;
 
 namespace HospiceNiagara.Controllers
 {
@@ -27,12 +28,12 @@ namespace HospiceNiagara.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
+            ApplicationUser memberViewModel = db.Users.Find(id);
+            if (memberViewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            return View(memberViewModel);
         }
 
         // GET: AdminMembers/Create
@@ -46,16 +47,32 @@ namespace HospiceNiagara.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneExt,IsContact,Position,PositionDescription,Bio,ProfilePicture,MimeType,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Create(MemberViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(applicationUser);
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber,
+                    PhoneExt = model.PhoneExt,
+                    IsContact = model.IsContact,
+                    Position = model.Position,
+                    PositionDescription = model.PositionDescription,
+                    Bio = model.Bio
+                };
+
+                //Add & Save
+                db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "AdminMembers");
             }
 
-            return View(applicationUser);
+            return View(model);
         }
 
         // GET: AdminMembers/Edit/5
@@ -65,12 +82,12 @@ namespace HospiceNiagara.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
+            ApplicationUser memberViewModel = db.Users.Find(id);
+            if (memberViewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            return View(memberViewModel);
         }
 
         // POST: AdminMembers/Edit/5
@@ -78,15 +95,15 @@ namespace HospiceNiagara.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,PhoneExt,IsContact,Position,PositionDescription,Bio,Email,PhoneNumber,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,IsContact,Position,PositionDescription,Bio")] ApplicationUser memberViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicationUser).State = EntityState.Modified;
+                db.Entry(memberViewModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(applicationUser);
+            return View(memberViewModel);
         }
 
         // GET: AdminMembers/Delete/5
@@ -96,12 +113,12 @@ namespace HospiceNiagara.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.Users.Find(id);
-            if (applicationUser == null)
+            ApplicationUser memberViewModel = db.Users.Find(id);
+            if (memberViewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            return View(memberViewModel);
         }
 
         // POST: AdminMembers/Delete/5
@@ -109,8 +126,8 @@ namespace HospiceNiagara.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            ApplicationUser applicationUser = db.Users.Find(id);
-            db.Users.Remove(applicationUser);
+            ApplicationUser memberViewModel = db.Users.Find(id);
+            db.Users.Remove(memberViewModel);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

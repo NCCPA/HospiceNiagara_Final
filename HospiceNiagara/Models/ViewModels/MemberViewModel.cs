@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HospiceNiagara.Models.ViewModels
 {
@@ -19,10 +20,11 @@ namespace HospiceNiagara.Models.ViewModels
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage= "E-Mail")]
-        [Display(Name = "E-Mail")]
+        [Required]
+        [Display(Name = "Email")]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
+        [Remote("doesEmailNameExist", "Account", HttpMethod = "POST", ErrorMessage = "Email already exists. Please enter a different Email.")]
         public string Email { get; set; }
 
         [Required]

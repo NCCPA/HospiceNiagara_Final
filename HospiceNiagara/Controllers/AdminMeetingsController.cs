@@ -17,12 +17,25 @@ namespace HospiceNiagara.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminMeetings
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 
             //Set Sort Order
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+
+            if(searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
 
             //Grab all Meetings
             var meetings = from m in db.Meetings
@@ -51,7 +64,10 @@ namespace HospiceNiagara.Controllers
                     break;
             }
 
-            return View(meetings.ToList());
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+
+            return View(meetings.ToPagedList(pageNumber,pageSize));
         }
 
         // GET: AdminMeetings/Details/5

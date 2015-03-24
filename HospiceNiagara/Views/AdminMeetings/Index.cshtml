@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Meetings>
+﻿@model PagedList.IPagedList<HospiceNiagara.Models.DatabaseModels.Meetings>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Meetings";
@@ -7,56 +9,58 @@
 <h2>Meetings</h2>
 
 <!--Search-->
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index","AdminMeetings",FormMethod.Get))
 {
     <p>
         <div class="form-inline">
-            <label class="control-label">Search by Meeting Name :</label> @Html.TextBox("SearchString", null, new { @class = "form-control" })
+            <label class="control-label">Search by Meeting Name :</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
             <input type="submit" value="Search" class="btn btn-warning" />
         </div>
     </p>
 }
-
 <!-- /End of search-->
-
+<p>
+    <a href="@Url.Action("Create","AdminMeetings")" class="btn btn-primary col-md-2"><span class="glyphicon pull-left glyphicon-plus"></span> Creat New</a>
+    
+</p>
 
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter=ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Desciption
         </th>
         <th>
-            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Length)
+            Length
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Location)
+            Location
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Requirements)
+            Requirements
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.isVisible)
+            Visible
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StartTime)
+            Start Time
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndTime)
+            End Time
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StaffLeadID)
+            Staff Name Lead
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedByID)
+            Created By
         </th>
         <th>
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-block btn-sm" })
+
         </th>
     </tr>
 
@@ -97,11 +101,16 @@
                 @Html.DisplayFor(modelItem => item.CreatedByID)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default"})
-                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" }) 
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default" })
             </td>
         </tr>
     }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0: Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

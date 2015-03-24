@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HospiceNiagara.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospiceNiagara.Controllers
 {
@@ -415,6 +416,24 @@ namespace HospiceNiagara.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        public JsonResult doesEmailNameExist(string Email)
+        {  
+            using(ApplicationDbContext db = new ApplicationDbContext())
+            {
+                try
+                {
+                    var email = db.Users.Single(m => m.Email == Email);
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+                catch(Exception)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+            }
         }
 
         #region Helpers

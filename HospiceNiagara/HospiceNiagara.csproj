@@ -206,6 +206,14 @@
     <Compile Include="Migrations\201503231729089_reverted-date-to-datetype.Designer.cs">
       <DependentUpon>201503231729089_reverted-date-to-datetype.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503240052503_changes_02.cs" />
+    <Compile Include="Migrations\201503240052503_changes_02.Designer.cs">
+      <DependentUpon>201503240052503_changes_02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503240053333_changes_02_reverted.cs" />
+    <Compile Include="Migrations\201503240053333_changes_02_reverted.Designer.cs">
+      <DependentUpon>201503240053333_changes_02_reverted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
@@ -324,11 +332,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_SideNavigation.cshtml" />
-    <Content Include="Views\AdminMembers\Create.cshtml" />
-    <Content Include="Views\AdminMembers\Delete.cshtml" />
-    <Content Include="Views\AdminMembers\Details.cshtml" />
-    <Content Include="Views\AdminMembers\Edit.cshtml" />
-    <Content Include="Views\AdminMembers\Index.cshtml" />
     <Content Include="Views\AdminAnnouncements\Create.cshtml" />
     <Content Include="Views\AdminAnnouncements\Delete.cshtml" />
     <Content Include="Views\AdminAnnouncements\Details.cshtml" />
@@ -344,6 +347,11 @@
     <Content Include="Views\AdminMeetings\Details.cshtml" />
     <Content Include="Views\AdminMeetings\Edit.cshtml" />
     <Content Include="Views\AdminMeetings\Index.cshtml" />
+    <Content Include="Views\AdminMembers\Create.cshtml" />
+    <Content Include="Views\AdminMembers\Delete.cshtml" />
+    <Content Include="Views\AdminMembers\Details.cshtml" />
+    <Content Include="Views\AdminMembers\Edit.cshtml" />
+    <Content Include="Views\AdminMembers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -376,6 +384,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503231729089_reverted-date-to-datetype.resx">
       <DependentUpon>201503231729089_reverted-date-to-datetype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503240052503_changes_02.resx">
+      <DependentUpon>201503240052503_changes_02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503240053333_changes_02_reverted.resx">
+      <DependentUpon>201503240053333_changes_02_reverted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

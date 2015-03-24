@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Member</h4>
+    <h4>MemberViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -24,6 +24,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
 
         <dt>
@@ -45,6 +61,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.Position)
         </dt>
+
         <dd>
             @Html.DisplayFor(model => model.Position)
         </dd>
@@ -65,30 +82,9 @@
             @Html.DisplayFor(model => model.Bio)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProfilePicture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProfilePicture)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>     
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>      
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) 
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Edit", "Edit", new { Id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
