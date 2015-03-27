@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using HospiceNiagara.Models.DatabaseModels;
 using System.Web.Mvc;
+using HospiceNiagara.Models.ViewModels;
 
 namespace HospiceNiagara.Models
 {
@@ -67,11 +68,8 @@ namespace HospiceNiagara.Models
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Deaths> Deaths { get; set; }
         public DbSet<Meetings> Meetings { get; set; }
-
-        
-        
-
-        
+        public DbSet<Folder> Folders { get; set; }
+        public DbSet<File> Files { get; set; }
         
     }
 }
