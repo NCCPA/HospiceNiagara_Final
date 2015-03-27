@@ -16,5 +16,7 @@ namespace HospiceNiagara.Models.ViewModels
 
         [StringLength(100, ErrorMessage = "The file description cannot be more than 100 characters.")]
         public string FolderDescription { get; set; }
+
+        public List<FileViewModel> Files { get; set; }
     }
 }
