@@ -3,14 +3,17 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
     {
-        
-        <img class="img-responsive img-circle profilePic" src="~/img/dp.jpeg">
+
+        <div class="profilePic">
+            <img class="img-responsive" src="~/img/login_background.jpg">
+        </div>
         <!--<li class="col-md-12"><img class="img-responsive" src="@@Url.Action("ShowPic", "Profile", new { id = User.Identity.GetUserId() })"></li> -->
+    <!--
     <li>
-        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @@Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
     </li>
-        <a href="@Url.Action("LogOff", "Account")" class="nav-link"><li><span class="glyphicon  glyphicon-log-out"></span>Log Off </li></a>
-    
+        <a href="@@Url.Action("LogOff", "Account")" class="nav-link"><li><span class="glyphicon  glyphicon-log-out"></span>Log Off </li></a>
+    -->
     }
 }
 else

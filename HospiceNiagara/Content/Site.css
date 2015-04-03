@@ -369,14 +369,16 @@ hr {
 
 .profilePic {
     max-height: 150px; 
-    width:50%;
+    width:90%;
     margin:0 auto;
     margin-top:15px;
     margin-bottom:15px;
+    overflow:hidden;
 }
 
 .navbar-divider {
     text-align:center;
+    font-size:large;
 }
 
 .navbar-divider:hover {
