@@ -23,7 +23,6 @@ namespace HospiceNiagara.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? folderID)
         {
 
-
             SelectListItem allOption = new SelectListItem() { Value = "0", Text = "All" };
             SelectList folders = new SelectList(db.Folders.OrderBy(x => x.FolderName), "ID", "FolderName");
             

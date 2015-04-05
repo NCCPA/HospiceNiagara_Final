@@ -19,7 +19,6 @@ namespace HospiceNiagara.Controllers
         // GET: AdminMeetings
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-
             //Set Sort Order
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
