@@ -37,10 +37,10 @@
                 </li>
                 <ul class="sub-menu collapse" id="myHosepice">
                     <li><a href="#">Resuorces</a></li>
-                    <li><a href="#">Announcements</a></li>
-                    <li><a href="#">Meetings</a></li>
-                    <li><a href="#">Deaths</a></li>
-                    <li><a href="#">Schedule</a></li>                    
+                    <a href="@Url.Action("Index","HospiceAnnouncements")" class="nav-link"><li>Announcements</li></a>        
+                    <a href="@Url.Action("Index","HospiceMeetings")" class="nav-link"><li>Meetings</li></a>                 
+                    <a href="@Url.Action("Index","HospiceDeaths")" class="nav-link"><li>Deaths</li></a>                 
+                    <a href="@Url.Action("Index","HopsiceSchedule")" class="nav-link"><li>Schedule</li></a>                                      
                 </ul>
 
                 @if (User.IsInRole("Admin")) {
@@ -49,7 +49,8 @@
                 </li>
                 <ul class="sub-menu collapse" id="admin">
                     <a href="@Url.Action("Index","AdminMembers")" class="nav-link"><li>Members</li></a>
-                    <li>Resources</li>
+                    <a href="@Url.Action("Index","AdminFiles")" class="nav-link"><li>Resources</li></a>
+                    <a href="@Url.Action("Index","AdminFolders")" class="nav-link"><li>Folders</li></a>
                     <a href="@Url.Action("Index","AdminAnnouncements")" class="nav-link"><li>Announcements</li></a>
                     <a href="@Url.Action("Index","AdminMeetings")" class="nav-link"><li>Meetings</li></a>
                     <a href="@Url.Action("Index","AdminDeaths")" class="nav-link"><li>Deaths</li></a>

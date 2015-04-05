@@ -11,9 +11,6 @@ namespace HospiceNiagara.Models.DatabaseModels
         public int ID { get; set; }
 
         [Required]
-        public int FolderID { get; set; }
-
-        [Required]
         public byte[] FileContent { get; set; }
 
         [Required]
@@ -26,5 +23,10 @@ namespace HospiceNiagara.Models.DatabaseModels
 
         [StringLength(100, ErrorMessage = "The file description cannot be more than 100 characters.")]
         public string FileDescription { get; set; }
+
+        public int FolderID { get; set; }
+
+        public virtual Folder Folder { get; set; }
+
     }
 }

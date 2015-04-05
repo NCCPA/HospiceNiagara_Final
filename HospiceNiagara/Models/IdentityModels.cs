@@ -69,7 +69,7 @@ namespace HospiceNiagara.Models
         public DbSet<Deaths> Deaths { get; set; }
         public DbSet<Meetings> Meetings { get; set; }
         public DbSet<File> Files { get; set; }
-        public DbSet<Folder> Folders { get; set; }
+        public DbSet<Folder> Folders { get; set; }       
 
     }
 }

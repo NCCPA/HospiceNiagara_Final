@@ -1,0 +1,34 @@
+﻿@model HospiceNiagara.Models.DatabaseModels.Folder
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Folder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FolderName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FolderName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FolderDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FolderDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -8,11 +8,6 @@ namespace HospiceNiagara.Models.DatabaseModels
 {
     public class Folder
     {
-        public Folder()
-        {
-
-        }
-
         public int ID { get; set; }
 
         [Required(ErrorMessage = "You cannot leave the name of the file blank.")]
@@ -22,6 +17,6 @@ namespace HospiceNiagara.Models.DatabaseModels
         [StringLength(100, ErrorMessage = "The file description cannot be more than 100 characters.")]
         public string FolderDescription { get; set; }
 
-        public List<File> Files { get; set; }
+        public virtual ICollection<File> Files { get; set; }
     }
 }

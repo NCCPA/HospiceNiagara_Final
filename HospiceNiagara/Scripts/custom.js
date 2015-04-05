@@ -6,7 +6,8 @@
        $("#menu-toggle").children().toggleClass("glyphicon-chevron-left");
        $("#menu-toggle").children().toggleClass("glyphicon-chevron-right");
    });
-
+    
+   $('#fileUpload').fileinput();
 
    $('#StartTime').timepicker({ 'step': 15 });
    $('#EndTime').timepicker({ 'step': 15 });

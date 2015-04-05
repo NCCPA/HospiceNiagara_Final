@@ -11,9 +11,6 @@ namespace HospiceNiagara.Models.ViewModels
         public int ID { get; set; }
 
         [Required]
-        public int FolderID { get; set; }
-
-        [Required]
         [StringLength(256)]
         public string MimeType { get; set; }
 

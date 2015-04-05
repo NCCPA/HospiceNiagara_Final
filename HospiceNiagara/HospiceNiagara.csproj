@@ -167,12 +167,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminAnnouncementsController.cs" />
     <Compile Include="Controllers\AdminDeathsController.cs" />
+    <Compile Include="Controllers\AdminFilesController.cs" />
+    <Compile Include="Controllers\AdminResourcesController.cs" />
+    <Compile Include="Controllers\AdminFoldersController.cs" />
     <Compile Include="Controllers\AdminMeetingsController.cs" />
     <Compile Include="Controllers\AdminMembersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HospiceAnnouncementsController.cs" />
+    <Compile Include="Controllers\HospiceDeathsController.cs" />
+    <Compile Include="Controllers\HospiceMeetingsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,6 +225,26 @@
     <Compile Include="Migrations\201503271957179_resoureFixedITHINK.Designer.cs">
       <DependentUpon>201503271957179_resoureFixedITHINK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504041747141_added_files_Folder.cs" />
+    <Compile Include="Migrations\201504041747141_added_files_Folder.Designer.cs">
+      <DependentUpon>201504041747141_added_files_Folder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504041944574_removed_fodlerID_ForeignKey.cs" />
+    <Compile Include="Migrations\201504041944574_removed_fodlerID_ForeignKey.Designer.cs">
+      <DependentUpon>201504041944574_removed_fodlerID_ForeignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504041954461_dbchange_files.cs" />
+    <Compile Include="Migrations\201504041954461_dbchange_files.Designer.cs">
+      <DependentUpon>201504041954461_dbchange_files.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504041955259_remove_dbFIlesCHange.cs" />
+    <Compile Include="Migrations\201504041955259_remove_dbFIlesCHange.Designer.cs">
+      <DependentUpon>201504041955259_remove_dbFIlesCHange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504042155542_fixedFiles_Folders.cs" />
+    <Compile Include="Migrations\201504042155542_fixedFiles_Folders.Designer.cs">
+      <DependentUpon>201504042155542_fixedFiles_Folders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
@@ -237,6 +262,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
+    <Content Include="Content\bootstrap-fileinput\css\fileinput.min.css" />
+    <Content Include="Content\bootstrap-fileinput\img\loading-sm.gif" />
+    <Content Include="Content\bootstrap-fileinput\img\loading.gif" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\jquery.timepicker.css" />
@@ -289,6 +318,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\fileinput.js" />
+    <Content Include="Scripts\fileinput.min.js" />
+    <Content Include="Scripts\fileinput_locale_de.js" />
+    <Content Include="Scripts\fileinput_locale_es.js" />
+    <Content Include="Scripts\fileinput_locale_fr.js" />
+    <Content Include="Scripts\fileinput_locale_hu.js" />
+    <Content Include="Scripts\fileinput_locale_LANG.js" />
+    <Content Include="Scripts\fileinput_locale_ru.js" />
+    <Content Include="Scripts\fileinput_locale_th.js" />
+    <Content Include="Scripts\fileinput_locale_uk.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -364,6 +403,27 @@
     <Content Include="Views\AdminMembers\Edit.cshtml" />
     <Content Include="Views\AdminMembers\Index.cshtml" />
     <Content Include="Views\Resource\Index.cshtml" />
+    <Content Include="Views\HospiceAnnouncements\Details.cshtml" />
+    <Content Include="Views\HospiceAnnouncements\Index.cshtml" />
+    <Content Include="Views\HospiceMeetings\Details.cshtml" />
+    <Content Include="Views\HospiceMeetings\Index.cshtml" />
+    <Content Include="Views\HospiceDeaths\Details.cshtml" />
+    <Content Include="Views\HospiceDeaths\Index.cshtml" />
+    <Content Include="Views\AdminResources\Create.cshtml" />
+    <Content Include="Views\AdminResources\Delete.cshtml" />
+    <Content Include="Views\AdminResources\Details.cshtml" />
+    <Content Include="Views\AdminResources\Edit.cshtml" />
+    <Content Include="Views\AdminResources\Index.cshtml" />
+    <Content Include="Views\AdminFolders\Create.cshtml" />
+    <Content Include="Views\AdminFolders\Delete.cshtml" />
+    <Content Include="Views\AdminFolders\Details.cshtml" />
+    <Content Include="Views\AdminFolders\Edit.cshtml" />
+    <Content Include="Views\AdminFolders\Index.cshtml" />
+    <Content Include="Views\AdminFiles\Create.cshtml" />
+    <Content Include="Views\AdminFiles\Delete.cshtml" />
+    <Content Include="Views\AdminFiles\Details.cshtml" />
+    <Content Include="Views\AdminFiles\Edit.cshtml" />
+    <Content Include="Views\AdminFiles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -406,6 +466,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503271957179_resoureFixedITHINK.resx">
       <DependentUpon>201503271957179_resoureFixedITHINK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504041747141_added_files_Folder.resx">
+      <DependentUpon>201504041747141_added_files_Folder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504041944574_removed_fodlerID_ForeignKey.resx">
+      <DependentUpon>201504041944574_removed_fodlerID_ForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504041954461_dbchange_files.resx">
+      <DependentUpon>201504041954461_dbchange_files.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504041955259_remove_dbFIlesCHange.resx">
+      <DependentUpon>201504041955259_remove_dbFIlesCHange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504042155542_fixedFiles_Folders.resx">
+      <DependentUpon>201504042155542_fixedFiles_Folders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
