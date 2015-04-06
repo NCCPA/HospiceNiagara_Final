@@ -175,6 +175,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HospiceAnnouncementsController.cs" />
     <Compile Include="Controllers\HospiceDeathsController.cs" />
+    <Compile Include="Controllers\HospiceFilesController.cs" />
     <Compile Include="Controllers\HospiceMeetingsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -425,6 +426,8 @@
     <Content Include="Views\AdminFiles\Details.cshtml" />
     <Content Include="Views\AdminFiles\Edit.cshtml" />
     <Content Include="Views\AdminFiles\Index.cshtml" />
+    <Content Include="Views\HospiceFiles\Details.cshtml" />
+    <Content Include="Views\HospiceFiles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -498,7 +501,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51248</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

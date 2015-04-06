@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.File>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <!--Search-->
+    @using (Html.BeginForm("Index", "HospiceFiles", FormMethod.Get))
+    {
+    <p>
+        <div class="form-inline">
+            <label class="control-label">Search by File Name: </label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <label for="FolderID" class="control-label">Folder Name: </label>
+            @Html.DropDownList("FolderID", null, htmlAttributes: new { @class = "form-control", @Name = "folderID" })
+
+
+            <input type="submit" value="Search" class="btn btn-warning" />
+        </div>
+    </p>
+    }
+    <!-- /End of search-->
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Folder.FolderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MimeType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileDescription)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Folder.FolderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MimeType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileDescription)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default col-md-6" })
+        </td>
+    </tr>
+}
+
+</table>
