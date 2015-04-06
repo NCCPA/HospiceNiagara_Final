@@ -47,3 +47,12 @@ input {
 h2 {
     color:white;
 }
+
+.hospLogo {
+    width:65%;
+    height:auto;
+    min-width:150px;
+    max-width:450px;
+    margin:0 auto;
+    text-align:center;
+}
