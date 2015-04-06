@@ -310,10 +310,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\login_background.jpg" />
     <Content Include="img\dp.jpeg" />
     <Content Include="img\Hopspice-Niagara-Logo.png" />
     <Content Include="img\login-bg.jpg" />
-    <Content Include="img\login_background.jpg" />
+    <Content Include="img\login_backgroundOld.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
