@@ -272,6 +272,7 @@
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login_page.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\register_page.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
