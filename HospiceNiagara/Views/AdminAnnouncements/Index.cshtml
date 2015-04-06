@@ -12,7 +12,7 @@
     <p>
         <div class="form-inline">
             <label class="control-label">Search by Announcement Name :</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
-            <input type="submit" value="Search" class="btn btn-warning" />
+            <input type="submit" value="Search" class="btn btn-primary" />
         </div>
     </p>
 }
@@ -37,7 +37,7 @@
         <th>
             Created By
         </th>
-        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-block" })</th>
+        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-block" })</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -58,9 +58,9 @@
             @Html.DisplayFor(modelItem => item.CreatedByID)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID}, new { @class="btn btn-default col-md-4" } ) 
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default col-md-4" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default col-md-4" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
         </td>
     </tr>
 }

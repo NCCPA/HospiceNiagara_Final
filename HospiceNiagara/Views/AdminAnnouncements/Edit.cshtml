@@ -60,7 +60,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-prima  ry btn-block" />
+                <input type="submit" value="Save" class="btn btn-success btn-block" />
+                <input type="button" onclick="goBack()" class="btn btn-default btn-danger" value="Cancel" />
             </div>
         </div>
     </div>
@@ -73,3 +74,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
