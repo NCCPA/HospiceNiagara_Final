@@ -4,8 +4,28 @@
     ViewBag.Title = "Announcements";
 }
 
-<h2>Announcements</h2>
-<hr />
+<h1>Announcements</h1>
+<br />
+<br />
+<form class="form-inline">
+    <div class="form-group">
+        <label for="txtSearch" class="sr-only">Search</label>
+        <input type="text" class="form-control" id="txtSearch" placeholder="Enter Search Content">
+    </div>
+    <div class="form-group">
+        <select name="ddlScheduleSelection" class="form-control">
+            <option value="all">Recent</option>
+            <option value="past">All</option>
+            <option value="past">Name</option>
+        </select>
+    </div>
+    <div class="form-group">
+        @using (Html.BeginForm("Index", "File", FormMethod.Get))
+        {
+            <input type="submit" class="btn btn-blue btn-primary" value="Filter" />
+        }
+    </div>
+</form>
 <!--Search-->
 @using (Html.BeginForm("Index", "AdminAnnouncements", FormMethod.Get))
 {
@@ -58,10 +78,12 @@
             @Html.DisplayFor(modelItem => item.CreatedByID)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" }) 
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
-        </td>
+            <div class="btn-group" role="group">
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
+                </div>
+</td>
     </tr>
 }
 
