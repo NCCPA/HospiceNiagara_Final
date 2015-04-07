@@ -5,15 +5,36 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Members</h2>
-<hr />
+<h1>Members</h1>
+<hr>
+<br />
+<form class="form-inline">
+    <div class="form-group">
+        <label for="txtSearch" class="sr-only">Search</label>
+        <input type="text" class="form-control" id="txtSearch" placeholder="Enter Search Content">
+    </div>
+    <div class="form-group">
+        <select name="ddlScheduleSelection" class="form-control">
+            <option value="all">Recent</option>
+            <option value="past">All</option>
+            <option value="past">Name</option>
+        </select>
+    </div>
+    <div class="form-group">
+        @using (Html.BeginForm("Index", "File", FormMethod.Get))
+        {
+            <input type="submit" class="btn btn-blue btn-primary" value="Filter" />
+        }
+    </div>
+</form>
+<br />
 <!--Search-->
 @using (Html.BeginForm("Index", "AdminMembers", FormMethod.Get))
 {
     <p>
         <div class="form-inline">
             <label class="control-label">Search by Member:</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
-            <input type="submit" value="Search" class="btn btn-warning" />
+            <input type="submit" value="Search" class="btn btn-primary" />
         </div>
     </p>
 }
@@ -42,7 +63,7 @@
         <th>
             Position Title
         </th>
-        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-block" })</th>
+        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -76,9 +97,9 @@
             @Html.DisplayFor(modelItem => item.Position)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { Id = item.Id }, new { @class = "btn btn-default col-md-4" }) 
-            @Html.ActionLink("Details", "Details", new { Id=item.Id }, new { @class = "btn btn-default col-md-4" }) 
-            @Html.ActionLink("Delete", "Delete", new { Id = item.Id }, new { @class = "btn btn-default col-md-4" })
+            @Html.ActionLink("Edit", "Edit", new { Id = item.Id }, new { @class = "btn btn-primary" }) 
+            @Html.ActionLink("Details", "Details", new { Id=item.Id }, new { @class = "btn btn-primary"}) 
+            @Html.ActionLink("Delete", "Delete", new { Id = item.Id }, new { @class = "btn btn-primary" })
         </td>
     </tr>
 }

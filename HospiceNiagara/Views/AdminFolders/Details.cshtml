@@ -26,9 +26,13 @@
             @Html.DisplayFor(model => model.FolderDescription)
         </dd>
 
+        <dt>
+            &nbsp;
+        </dt>
+
+        <dd>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

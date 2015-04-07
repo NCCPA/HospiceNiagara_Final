@@ -4,9 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Resources</h2>
-
-<p>
+<h1>Resources</h1>
+<hr >
+<br />
+<form class="form-inline">
     @using (Html.BeginForm("", "AdminFiles", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", name = "fileUploadForm" }))
     {
 
@@ -28,11 +29,11 @@
             </div>
         </div>
 
-        
+
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                   
+
                 </div>
             </div>
         </div>
@@ -44,35 +45,35 @@
                 </div>
             </div>
         </div>
-    }   
-
-</p>
-<table class="table">
-    <tr>      
-        <th>
-            @Html.DisplayNameFor(model => model.FileName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileDescription)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileDescription)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
     }
+</form>
+<br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileDescription)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileDescription)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>

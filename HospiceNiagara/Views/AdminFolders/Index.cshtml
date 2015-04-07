@@ -4,11 +4,29 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h1>Index</h1>
+<hr>
+<br />
+<form class="form-inline">
+    <div class="form-group">
+        <label for="txtSearch" class="sr-only">Search</label>
+        <input type="text" class="form-control" id="txtSearch" placeholder="Enter Search Content">
+    </div>
+    <div class="form-group">
+        <select name="ddlScheduleSelection" class="form-control">
+            <option value="all">Recent</option>
+            <option value="past">All</option>
+            <option value="past">Name</option>
+        </select>
+    </div>
+    <div class="form-group">
+        @using (Html.BeginForm("Index", "File", FormMethod.Get))
+        {
+            <input type="submit" class="btn btn-blue btn-primary" value="Filter" />
+        }
+    </div>
+</form>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -17,7 +35,9 @@
         <th>
             @Html.DisplayNameFor(model => model.FolderDescription)
         </th>
-        <th></th>
+        <th>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -29,9 +49,9 @@
             @Html.DisplayFor(modelItem => item.FolderDescription)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary " }) 
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary " }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary " })
         </td>
     </tr>
 }
