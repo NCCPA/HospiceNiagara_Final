@@ -57,7 +57,7 @@
         <th>
             Created By
         </th>
-        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-block" })</th>
+        <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -78,11 +78,9 @@
             @Html.DisplayFor(modelItem => item.CreatedByID)
         </td>
         <td>
-            <div class="btn-group" role="group">
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
-                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary col-md-4" })
-                </div>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary " })
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary " })
 </td>
     </tr>
 }
