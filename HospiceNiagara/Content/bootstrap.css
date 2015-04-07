@@ -3130,7 +3130,7 @@ fieldset[disabled] .btn-primary.active {
 }
 .btn-success {
   color: #ffffff;
-  background-color: #3fb618;
+  background-color: #48af56;
   border-color: #3fb618;
 }
 .btn-success:hover,
@@ -3265,7 +3265,7 @@ fieldset[disabled] .btn-warning.active {
 }
 .btn-danger {
   color: #ffffff;
-  background-color: #ff0039;
+  background-color: #d21313;
   border-color: #ff0039;
 }
 .btn-danger:hover,

@@ -1,0 +1,62 @@
+﻿html {
+    /*background: url("/img//login-bg.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+    
+}
+
+h4, label {color:#fff;}
+
+body {
+    background-color:#0b1726;
+}
+
+.form-control {
+   
+}
+
+.form-control:focus {
+    
+}
+
+#login-content {
+    margin-top:50px;
+    margin-bottom:50px;
+    background-color:#375a7f;
+    padding:2%;
+}
+
+.glyphicon {
+        top: 0;
+        color:#555555;
+}
+
+.input-group[class*="col-"] {  
+    padding-left:15px !important;
+    padding-right:15px !important;
+}
+
+
+input {
+    max-width:none;
+}
+@media (min-width: 992px) {
+    .login-email {
+        margin-bottom: 0px !important;
+    }
+}
+h2 {
+    color:white;
+}
+
+.hospLogo {
+    width:65%;
+    height:auto;
+    min-width:150px;
+    max-width:300px;
+    display: block;
+    margin:0 auto;
+    text-align:center;
+}

@@ -246,6 +246,10 @@
     <Compile Include="Migrations\201504042155542_fixedFiles_Folders.Designer.cs">
       <DependentUpon>201504042155542_fixedFiles_Folders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504070017168_obituary.cs" />
+    <Compile Include="Migrations\201504070017168_obituary.Designer.cs">
+      <DependentUpon>201504070017168_obituary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
@@ -272,6 +276,7 @@
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login_page.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\register_page.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -309,10 +314,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\login_background.jpg" />
     <Content Include="img\dp.jpeg" />
     <Content Include="img\Hopspice-Niagara-Logo.png" />
     <Content Include="img\login-bg.jpg" />
-    <Content Include="img\login_background.jpg" />
+    <Content Include="img\login_backgroundOld.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -485,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504042155542_fixedFiles_Folders.resx">
       <DependentUpon>201504042155542_fixedFiles_Folders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504070017168_obituary.resx">
+      <DependentUpon>201504070017168_obituary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

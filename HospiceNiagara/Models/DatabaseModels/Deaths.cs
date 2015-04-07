@@ -29,6 +29,11 @@ namespace HospiceNiagara.Models.DatabaseModels
         [StringLength(200, ErrorMessage = "The note can be no more than 200 characters long.")]
         public string Note { get; set; }
 
+
+        [Display(Name = "Obituary")]
+        [StringLength(200, ErrorMessage = "The obituary linkObituary can be no more than 200 characters long.")]
+        public string Obituary { get; set; }
+
         [Display(Name = "Visible")]
         [Range(0, 2, ErrorMessage = "The visable value is not valid.")]
         public bool Visible { get; set; }

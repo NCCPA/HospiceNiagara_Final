@@ -1,54 +1,60 @@
-﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Deaths>
-
+﻿@model PagedList.IPagedList<HospiceNiagara.Models.DatabaseModels.Deaths>
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "In Memoriam";
 }
 
-<h2>Recently deceased</h2>
+<h1>In Memoriam</h1>
+<br />
+<div>
+    <!--Search-->
+    @using (Html.BeginForm("Index", "HospiceDeaths", FormMethod.Get))
+    {
+        <p>
+            <div class="form-inline">
+                <label class="control-label">Search by Name: </label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })      
+                <input type="submit" value="Search" class="btn btn-success" />
+            </div>
+        </p>
+    }
+    <!-- /End of search-->
+</div>
+<br />
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Note)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Visible)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedByID)
-        </th>
-    </tr>
+<div class="row">
+    @foreach (var item in Model.Skip(0).Take(10))
+    {
+        <div class="col-xs-12 col-sm-10  col-sm-push-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Html.DisplayFor(modelItem => item.Name)</div>
+                <div class="row">
+                    <div class="panel-body">
+                        <div class="col-xs-12">
+                            Obituary : @Html.DisplayFor(modelItem => item.Obituary)
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-3">
+                                    Location  : @Html.DisplayFor(modelItem => item.Location)
+                                </div>
+                                <div class="col-xs-6 col-sm-3">
+                                    Date : @Html.DisplayFor(modelItem => item.Date)
+                                </div>
+                                <div class="col-xs-6 col-sm-3">
+                                   Notes : @Html.DisplayFor(modelItem => item.Note)
+                                  </div>
+                                <div class="col-xs-6 col-sm-3">
+                                    Posted By : @Html.DisplayFor(modelItem => item.CreatedByID)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Note)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Visible)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedByID)
-        </td>
-    </tr>
-}
+    }
+</div>
 
-</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

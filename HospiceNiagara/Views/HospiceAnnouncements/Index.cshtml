@@ -1,43 +1,135 @@
-﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Announcement>
-
+﻿@model PagedList.IPagedList<HospiceNiagara.Models.DatabaseModels.Announcement>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Announcements";
 }
 
-<h2>Announcements</h2>
+<h1>Announcements</h1>
+<br />
+<div>
+    <!--Search-->
+    @using (Html.BeginForm("Index", "HospiceAnnouncements", FormMethod.Get))
+    {
+        <p>
+            <div class="form-inline">
+                <label class="control-label">Search by Title: </label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </p>
+    }
+    <!-- /End of search-->
+</div>
+<br />
+<!-- 
+<div class="row">
+    <div class="col-xs-12 col-sm-10  col-sm-push-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">Posted By : Admin    On : 1/25/15 <span class="widget-icon-right glyphicon glyphicon-flag"></span></div>
+            <div class="row">
+                <div class="panel-body">
+                    <div class="col-xs-12">
+                        <h4>Apple Bobbing</h4>
 
+                        <p>Here is some info for you. We have apple bobbing. Want to earn your apple?</p>
+                        <div class="col-xs-6">
+                            Related Files
+                            <ul class="list-group list-inline">
+                                <li class="list-group-item"><a href="#">instructions</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6">
+                            Visible To
+                            <ul class="list-group list-inline">
+                                <li class="list-group-item">All</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-10  col-sm-push-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">Posted By : Admin    On : 1/21/15 <span class="widget-icon-right glyphicon glyphicon-flag"></span></div>
+            <div class="row">
+                <div class="panel-body">
+                    <div class="col-xs-12">
+                        <h4>Apple Throwing</h4>
 
-<table class="table table-hover table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>       
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            Posted By
-        </th>      
-    </tr>
+                        <p>
+                            Here is some info for you. We have apple bobbing. Want to earn your apple? here are the rules
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                            anim id est laborum."
+                            Enjoy.
+                        </p>
+                        <div class="col-xs-6">
+                            Related Files
+                            <ul class="list-group list-inline">
+                                <li class="list-group-item"> None </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6">
+                            Visible To
+                            <ul class="list-group list-inline">
+                                <li class="list-group-item">Residential</li>
+                                <li class="list-group-item">New Board Members</li>
+                                <li class="list-group-item">Bereavement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+    <div class="row">
+            @foreach (var item in Model.Take(10)) {
+            <div class="col-xs-12 col-sm-10  col-sm-push-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@Html.DisplayFor(modelItem => item.Title)</div>
+                    <div class="row">
+                        <div class="panel-body">
+                            <div class="col-xs-12">
+                                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4">
+                                        Posted By : @Html.DisplayFor(modelItem => item.CreatedByID)
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-sm-push-4">
+                                        On : @Html.DisplayFor(modelItem => item.Date)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>       
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedByID)
-        </td>      
-    </tr>
-}
+            }
+     </div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-</table>
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<!--
+    
+
+     <div class="col-xs-6">
+                            Related Files
+                            <ul class="list-group list-inline">
+                                <li class="list-group-item"><a href="#">instructions</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-6">
+                            Visible To
+                            <ul class="list-group list-inline">
+                                <li class="list-group-item">All</li>
+                            </ul>
+                        </div>
+
+-->
