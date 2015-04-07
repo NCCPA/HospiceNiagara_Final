@@ -246,6 +246,10 @@
     <Compile Include="Migrations\201504042155542_fixedFiles_Folders.Designer.cs">
       <DependentUpon>201504042155542_fixedFiles_Folders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504070017168_obituary.cs" />
+    <Compile Include="Migrations\201504070017168_obituary.Designer.cs">
+      <DependentUpon>201504070017168_obituary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
@@ -487,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504042155542_fixedFiles_Folders.resx">
       <DependentUpon>201504042155542_fixedFiles_Folders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504070017168_obituary.resx">
+      <DependentUpon>201504070017168_obituary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
