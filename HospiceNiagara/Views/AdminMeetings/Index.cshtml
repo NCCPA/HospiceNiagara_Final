@@ -8,25 +8,6 @@
 
 <h1>Meetings</h1>
 <hr />
-<br /><form class="form-inline">
-    <div class="form-group">
-        <label for="txtSearch" class="sr-only">Search</label>
-        <input type="text" class="form-control" id="txtSearch" placeholder="Enter Search Content">
-    </div>
-    <div class="form-group">
-        <select name="ddlScheduleSelection" class="form-control">
-            <option value="all">Recent</option>
-            <option value="past">All</option>
-            <option value="past">Name</option>
-        </select>
-    </div>
-    <div class="form-group">
-        @using (Html.BeginForm("Index", "File", FormMethod.Get))
-        {
-            <input type="submit" class="btn btn-blue btn-primary" value="Filter" />
-        }
-    </div>
-</form>
 <br />
 
 <!--Search-->
