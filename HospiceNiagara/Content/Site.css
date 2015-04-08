@@ -386,5 +386,25 @@ hr {
     background-color:#2e353d !important;
 }
 
+/*AODA Text Resizer*/
+#resize {
+    font-size: 12px !important;}
+
+#resize a
+           {  font-size:24px;
+              color:#aaa;
+              display:block;
+              font-weight:bold;
+              padding: 5px;}
+#resize a:hover
+           {  color:#fff;
+              background:#000;
+              transition:.25s ease-out;}
+
+#resize a.selected  {  background:#000;
+               color:#fff !important;}
+#resize  #small     {  font-size:12% !important;}
+#resize  #medium    {  font-size:16% !important;}
+#resize  #large     {  font-size:20% !important;}
 
 /*End of new Sidebar Style*/
