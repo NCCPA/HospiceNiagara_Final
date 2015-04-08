@@ -6,15 +6,17 @@
     ViewBag.Title = "Meetings";
 }
 
-<h2>Meetings</h2>
+<h1>Meetings</h1>
 <hr />
+<br />
+
 <!--Search-->
 @using (Html.BeginForm("Index","AdminMeetings",FormMethod.Get))
 {
     <p>
         <div class="form-inline">
             <label class="control-label">Search by Meeting Name :</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
-            <input type="submit" value="Search" class="btn btn-warning" />
+            <input type="submit" value="Search" class="btn btn-primary" />
         </div>
     </p>
 }
@@ -54,7 +56,7 @@
             Created By
         </th>
         <th>
-            <a href="@Url.Action("Create","AdminMeetings")" class="btn btn-primary btn-block "><span class="glyphicon small glyphicon-plus pull-left"></span>Creat New</a>    
+            <a href="@Url.Action("Create","AdminMeetings")" class="btn btn-success">Create New</a>    
         </th>
     </tr>
 
@@ -99,9 +101,9 @@
                 @Html.DisplayFor(modelItem => item.CreatedByID)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-default col-md-4" })
-                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default col-md-4" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default col-md-4" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }

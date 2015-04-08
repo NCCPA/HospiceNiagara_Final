@@ -1,32 +1,24 @@
-﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Deaths>
-
+﻿@model PagedList.IPagedList<HospiceNiagara.Models.DatabaseModels.Deaths>
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "In Memoriam";
 }
 
 <h1>In Memoriam</h1>
 <br />
-<br />
-<form class="form-inline">
-    <div class="form-group">
-        <label for="txtSearch" class="sr-only">Search</label>
-        <input type="text" class="form-control" id="txtSearch" placeholder="Enter Search Content">
-    </div>
-    <div class="form-group">
-        <select name="ddlScheduleSelection" class="form-control">
-            <option value="all">Recent</option>
-            <option value="past">All</option>
-            <option value="past">Name</option>
-        </select>
-    </div>
-    <div class="form-group">
-        @using (Html.BeginForm("Index", "File", FormMethod.Get))
-        {
-            <input type="submit" class="btn btn-blue btn-primary" value="Filter" />
-        }
-    </div>
-</form>
-<br />
+<div>
+    <!--Search-->
+    @using (Html.BeginForm("Index", "HospiceDeaths", FormMethod.Get))
+    {
+        <p>
+            <div class="form-inline">
+                <label class="control-label">Search by Name: </label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })      
+                <input type="submit" value="Search" class="btn btn-success" />
+            </div>
+        </p>
+    }
+    <!-- /End of search-->
+</div>
 <br />
 
 <div class="row">
@@ -41,13 +33,13 @@
                             Obituary : @Html.DisplayFor(modelItem => item.Obituary)
                             <div class="row">
                                 <div class="col-xs-6 col-sm-3">
-                                    @Html.DisplayNameFor(model => model.Location)  : @Html.DisplayFor(modelItem => item.Location)
+                                    Location  : @Html.DisplayFor(modelItem => item.Location)
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
-                                    @Html.DisplayNameFor(model => model.Date) : @Html.DisplayFor(modelItem => item.Date)
+                                    Date : @Html.DisplayFor(modelItem => item.Date)
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
-                                    @Html.DisplayNameFor(model => model.Note) : @Html.DisplayFor(modelItem => item.Note)
+                                   Notes : @Html.DisplayFor(modelItem => item.Note)
                                   </div>
                                 <div class="col-xs-6 col-sm-3">
                                     Posted By : @Html.DisplayFor(modelItem => item.CreatedByID)
@@ -62,3 +54,7 @@
     }
 </div>
 
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

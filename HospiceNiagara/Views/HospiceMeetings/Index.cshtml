@@ -1,36 +1,23 @@
-﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.Meetings>
-
+﻿@model PagedList.IPagedList<HospiceNiagara.Models.DatabaseModels.Meetings>
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Meetings";
 }
 
 <h1>Meetings</h1>
 <br />
-<br />
-<form class="form-inline">
-    <div class="form-group">
-        <label for="txtSearch" class="sr-only">Search</label>
-        <input type="text" class="form-control" id="txtSearch" placeholder="Enter Search Content">
-    </div>
-    <div class="form-group">
-        <select name="ddlScheduleSelection" class="form-control">
-            <option value="all">All</option>
-            <option value="past">Title</option>
-            <option value="past">Description</option>
-            <option value="past">Posted By</option>
-        </select>
-    </div>
-    <div class="form-group">
-        @using (Html.BeginForm("Index", "File", FormMethod.Get))
-        {
-            <input type="submit" class="btn btn-blue btn-primary" value="Filter" />
-        }
-    </div>
-</form>
-<br />
+@using (Html.BeginForm("Index", "HospiceMeetings", FormMethod.Get))
+{
+    <p>
+        <div class="form-inline">
+            <label class="control-label">Search by Meeting Name :</label> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </p>
+}
 <br />
     <div class="row">
-        @foreach (var item in Model.Skip(0).Take(10))
+        @foreach (var item in Model)
         {
             <div class="col-xs-12 col-sm-10  col-sm-push-1">
                 <div class="panel panel-default">
@@ -56,14 +43,14 @@
 
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-7">
-                                        @Html.DisplayNameFor(model => model.StartTime) : @Html.DisplayFor(modelItem => item.StartTime)
+                                        Start Time : @Html.DisplayFor(modelItem => item.StartTime)
                                    &nbsp; &nbsp; &nbsp;
-                                        @Html.DisplayNameFor(model => model.EndTime) : @Html.DisplayFor(modelItem => item.EndTime)
+                                        End Time : @Html.DisplayFor(modelItem => item.EndTime)
                                     </div>
                                     <div class="col-xs-12 col-sm-5">
                                         Staff Lead : @Html.DisplayFor(modelItem => item.StaffLeadID)
                                         &nbsp; &nbsp; &nbsp;
-                                        @Html.DisplayNameFor(model => model.Date) Posted : @Html.DisplayFor(modelItem => item.Date)
+                                        Date Posted : @Html.DisplayFor(modelItem => item.Date)
                                     </div>
                                 </div>
 
@@ -75,3 +62,7 @@
 
         }
     </div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
