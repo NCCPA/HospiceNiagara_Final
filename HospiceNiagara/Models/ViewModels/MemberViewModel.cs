@@ -46,5 +46,9 @@ namespace HospiceNiagara.Models.ViewModels
         [Display(Name = "Bio")]
         [StringLength(250, ErrorMessage = "Bio Cannot be More than 250 Charactes")]
         public string Bio { get; set; }
+
+        public string RoleID { get; set; }
+
+        public virtual Microsoft.AspNet.Identity.EntityFramework.IdentityRole Role { get; set; }
     }
 }

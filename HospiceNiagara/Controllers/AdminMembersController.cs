@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using HospiceNiagara.Models;
 using HospiceNiagara.Models.ViewModels;
 using PagedList;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospiceNiagara.Controllers
 {
@@ -77,7 +79,9 @@ namespace HospiceNiagara.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser memberViewModel = db.Users.Find(id);
+                       
+            ApplicationUser memberViewModel = db.Users.Find(id);      
+
             if (memberViewModel == null)
             {
                 return HttpNotFound();
@@ -88,6 +92,15 @@ namespace HospiceNiagara.Controllers
         // GET: AdminMembers/Create
         public ActionResult Create()
         {
+            //Get all roles from db
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");
+
+            //assign roles to a list
+            var rolelist = roles.ToList();
+
+            ViewBag.RoleID = rolelist;
+            var member = db.Users.Include(f => f.Roles);
+
             return View();
         }
 
@@ -111,13 +124,23 @@ namespace HospiceNiagara.Controllers
                     IsContact = model.IsContact,
                     Position = model.Position,
                     PositionDescription = model.PositionDescription,
-                    Bio = model.Bio
+                    Bio = model.Bio                    
                 };
 
                 //Add & Save
                 db.Users.Add(user);
                 db.SaveChanges();
 
+
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+                
+                var roleName = roleManager.FindById(model.RoleID).Name;
+                var userID = UserManager.FindByEmail(model.Email).Id;
+                UserManager.AddToRole(userID,roleName);
+
+                
+                
                 return RedirectToAction("Index", "AdminMembers");
             }
 
@@ -152,6 +175,8 @@ namespace HospiceNiagara.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+
             return View(memberViewModel);
         }
 
