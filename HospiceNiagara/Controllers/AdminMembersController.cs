@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospiceNiagara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminMembersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -98,7 +99,7 @@ namespace HospiceNiagara.Controllers
             //assign roles to a list
             var rolelist = roles.ToList();
 
-            ViewBag.RoleID = rolelist;
+            ViewBag.RolesList = rolelist;
             var member = db.Users.Include(f => f.Roles);
 
             return View();
@@ -138,9 +139,7 @@ namespace HospiceNiagara.Controllers
                 var roleName = roleManager.FindById(model.RoleID).Name;
                 var userID = UserManager.FindByEmail(model.Email).Id;
                 UserManager.AddToRole(userID,roleName);
-
-                
-                
+                                
                 return RedirectToAction("Index", "AdminMembers");
             }
 

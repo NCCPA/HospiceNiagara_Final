@@ -27,7 +27,7 @@
             
                 
                 <li class="active">
-                    <a href="#">
+                    <a href="@Url.Action("Index","Home")">
                         <i class="fa fa-home fa-lg"></i> Home
                     </a>
                 </li>
@@ -43,7 +43,7 @@
                     <a href="@Url.Action("Index","HopsiceSchedule")" class="nav-link"><li>Schedule</li></a>                                      
                 </ul>
 
-              
+              @if (User.IsInRole("Admin")) { 
                 <li data-toggle="collapse" data-target="#admin" class="collapsed">
                     <a href="#"><i class="fa fa-dashboard fa-lg"></i> Admin <span class="arrow"></span></a>
                 </li>
@@ -56,15 +56,16 @@
                     <a href="@Url.Action("Index","AdminDeaths")" class="nav-link"><li>Deaths</li></a>
                     <li>Schedule</li>
                 </ul>
+              }
                 
             </ul>
             <li data-toggle="collapse" data-target="#size" class="collapsed">
-                <a href="#"><i class="fa fa-dashboard fa-lg"></i> Text Size <span class="arrow"></span></a>
+                <a href="#"><i class="fa fa-text-height"></i> Text Size <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="size">
                     <a href="#" id="incfont" class="nav-link"><li>Increase +</li></a>
                     <a href="#" id="decfont" class="nav-link"><li>Decrease -</li></a>
-</ul>
+            </ul>
 
         </div>
     </div>

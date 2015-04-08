@@ -12,6 +12,7 @@ using PagedList;
 
 namespace HospiceNiagara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminMeetingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

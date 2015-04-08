@@ -11,8 +11,10 @@ using HospiceNiagara.Models.DatabaseModels;
 
 namespace HospiceNiagara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminFoldersController : Controller
     {
+        
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminFolders

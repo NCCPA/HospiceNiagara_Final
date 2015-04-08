@@ -1,25 +1,23 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-    {
+    <div class="profilePic">
+        <img class="img-responsive" src="~/img/login_background.jpg">
+    </div>
 
-        <div class="profilePic">
-            <img class="img-responsive" src="~/img/login_background.jpg">
-        </div>
-        <!--<li class="col-md-12"><img class="img-responsive" src="@@Url.Action("ShowPic", "Profile", new { id = User.Identity.GetUserId() })"></li> -->
-    <!--
-    <li>
-        @@Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    <!--<li class="col-md-12"><img class="img-responsive" src="@@Url.Action("ShowPic", "Profile", new { id = User.Identity.GetUserId() })"></li> -->
+    <li data-toggle="collapse" data-target="#logoutNavHeader" class="collapsed">
+        <a><i class="fa fa-sign-out invisible"></i>Welcome @User.Identity.GetUserName()!</a>
     </li>
-        <a href="@@Url.Action("LogOff", "Account")" class="nav-link"><li><span class="glyphicon  glyphicon-log-out"></span>Log Off </li></a>
-    -->
-    }
+    <li data-toggle="collapse" data-target="#logoutNav" class="collapsed">
+        <a href="@Url.Action("LogOff", "Account")"><i class="fa fa-sign-out"></i> Sign out</a>
+    </li>
+
 }
 else
 {
-    
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    
+
+    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
 }

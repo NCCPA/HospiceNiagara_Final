@@ -44,7 +44,10 @@
             <th>
                 Position Title
             </th>
-            <th>@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })</th>
+            <th>
+                <a href="@Url.Action("Register","Account")" class="btn btn-success btn-block">Create New</a>
+                
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -79,9 +82,9 @@
                     @Html.DisplayFor(modelItem => item.Position)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Edit", "Edit", new { Id = item.Id }, new { @class = "btn btn-primary col-md-4" })
+                    @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn btn-primary col-md-4" })
+                    @Html.ActionLink("Delete", "Delete", new { Id = item.Id }, new { @class = "btn btn-primary col-md-4" })
                 </td>
             </tr>
         }

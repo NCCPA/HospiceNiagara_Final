@@ -106,6 +106,10 @@ namespace HospiceNiagara.Models
         [Display(Name = "Bio")]
         [StringLength(250, ErrorMessage = "Bio Cannot be More than 250 Charactes")]
         public string Bio { get; set; }
+
+        public string RoleID { get; set; }
+
+        public virtual Microsoft.AspNet.Identity.EntityFramework.IdentityRole Role { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -126,7 +130,10 @@ namespace HospiceNiagara.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [Display(Name = "Code")]
         public string Code { get; set; }
+
     }
 
     public class ForgotPasswordViewModel

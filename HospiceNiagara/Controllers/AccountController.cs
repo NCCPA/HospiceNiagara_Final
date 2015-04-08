@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospiceNiagara.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -120,6 +120,8 @@ namespace HospiceNiagara.Controllers
                 return View(model);
             }
 
+
+
             // The following code protects for brute force attacks against the two factor codes. 
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
@@ -140,9 +142,16 @@ namespace HospiceNiagara.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles="Admin")]
         public ActionResult Register()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            //Get all roles from db
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");
+
+            //assign roles to a list
+            var rolelist = roles.ToList();
+            ViewBag.RolesList = rolelist;            
             return View();
         }
 
@@ -172,15 +181,15 @@ namespace HospiceNiagara.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    ApplicationDbContext db = new ApplicationDbContext();
+                    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var roleName = roleManager.FindById(model.RoleID).Name;
+                    var userID = userManager.FindByEmail(model.Email).Id;
+                    UserManager.AddToRole(userID, roleName);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "AdminMembers");
                 }
                 AddErrors(result);
             }
@@ -404,6 +413,7 @@ namespace HospiceNiagara.Controllers
 
         //
         // GET: /Account/LogOff               
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

@@ -14,6 +14,7 @@ using System.Text;
 
 namespace HospiceNiagara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminResourcesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

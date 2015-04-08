@@ -12,11 +12,13 @@ using PagedList;
 
 namespace HospiceNiagara.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminDeathsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminDeaths
+        
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             //Set Sort Order
