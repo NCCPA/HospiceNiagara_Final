@@ -18,7 +18,8 @@ namespace HospiceNiagara.Controllers
     [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
-        private ApplicationUserManager _userManager;
+        private ApplicationUserManager _userManager;        
+        private HelperClass helperClass = new HelperClass();
 
         public AccountController()
         {
@@ -71,12 +72,43 @@ namespace HospiceNiagara.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
+
                 return View(model);
+            }
+
+            
+
+            // current email is not confirmed in the database
+            if (helperClass.isValidUser(model.Email,model.Password))
+            {
+                return View("ConfirmEmail", model);
             }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+
+            //break down the result status with custom login first time verification
+            if (result == SignInStatus.Success)
+            {
+                    return RedirectToLocal(returnUrl);                                          
+            }
+            if (result == SignInStatus.LockedOut)
+            {
+                return View("Lockout");
+            }
+            if (result == SignInStatus.RequiresVerification)
+            {
+                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            }
+
+
+            ModelState.AddModelError("", "Invlaid Login attempt");
+            return View(model);
+
+            /*
             switch (result)
             {
                 case SignInStatus.Success:
@@ -90,6 +122,7 @@ namespace HospiceNiagara.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+            */
         }
 
         //
@@ -220,19 +253,22 @@ namespace HospiceNiagara.Controllers
                     MailMessage mailMessage = new MailMessage();
                     mailMessage.From = new MailAddress("morozoandrei@outlook.com");
                     mailMessage.To.Add(model.Email);
-                    mailMessage.Subject = "Test Email";
-                    mailMessage.Body = "Hello " + 
-                                        model.FirstName +
-                                        " login to your new Hospice Niagara portal at <WebsiteURLHERE>" +
-                                        "with temporary password of " + generatedPassword;
+                    mailMessage.Subject = "Hospice Niagara Account setup";
 
+                    string bodyMessage = "<h1>Hello " + model.FirstName + " " + model.LastName + "</h1>" +
+                       "<p>Welcome to Hospice Niagara your account is ready</p>" +
+                       "<p>Login Portal: http://www.hospiceniagara/portal.com</p>" +
+                       "<p>Temporary Password: " + generatedPassword + "</p>" +
+                       "<p>Check out your profile to see if all information is correct</p>";
 
-                    string message = WebUtility.HtmlEncode(
-                        "<h1>Hello" + model.FirstName + "</h1> <br /><br />" +
-                        "<p>Welcome to Hospice Niagara your account</p>"
-                        );
+                    mailMessage.IsBodyHtml = true;
+                    mailMessage.Body = bodyMessage;
+
 
                     client.Send(mailMessage);
+                    
+
+                   
 
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
@@ -253,15 +289,60 @@ namespace HospiceNiagara.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        [HttpGet]
+        public ActionResult ConfirmEmail([Bind(Include = "id,Email")] LoginViewModel model, string oldPassword, string newPassword)
         {
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+          return View(model);
         }
+
+        //
+        // POST: /Account/ConfirmEmail
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ConfirmEmail(LoginViewModel model, string oldPassword, string password, string passwordConfirmed)
+        {
+            //Make sure fields all work nicely
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            if(password != passwordConfirmed)
+            {
+                ModelState.AddModelError("Password", "New password and confirm password do not match");
+                return View(model);
+            }
+            else //everything is good change user password
+            {
+                var user = UserManager.Find(model.Email,oldPassword); //find user
+
+                if(user != null) //make sure he is inside the database once more
+                {
+                    var result = UserManager.ChangePassword(user.Id, oldPassword, password); //change password and get result
+                    
+                    if (result.Succeeded)
+                    {
+                        //to update EmailConfirmedField
+                        ApplicationDbContext db = new ApplicationDbContext();
+
+                        var updateUser = db.Users.Where(x => x.Id == user.Id).SingleOrDefault();
+                        updateUser.EmailConfirmed = true;
+                        db.SaveChanges();                       
+                        
+                        return View("Login");
+                    }                                      
+                }
+                else
+                {
+                    ModelState.AddModelError("ErrorOldPassword", "Old Password entered Incorrectly or Email does not exist anymore");
+                    return View(model);
+                }
+            }
+            
+            //if we got this far dammit!                        
+            return View(model);
+        }
+
 
         //
         // GET: /Account/ForgotPassword

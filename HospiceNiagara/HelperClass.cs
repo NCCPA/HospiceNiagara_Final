@@ -215,6 +215,29 @@ namespace HospiceNiagara
 
             // Return the first length bytes
             return guidResult.Substring(0, length);
-        }       
+        }
+        
+        /// <summary>
+        /// Checks to see if the users email and password exist in database and 
+        /// returns true if their password is correct false if they are not correct credentials
+        /// </summary>        
+        /// <param name="email">users Email (string)</param>
+        /// <param name="password">users Password (string)</param>
+        /// <returns></returns>
+        public bool isValidUser (string email, string password)
+        {
+            //check to see if there is a user
+            var user = UserManager.Find(email, password);
+
+            if(user!= null)
+            {
+                if (!user.EmailConfirmed)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

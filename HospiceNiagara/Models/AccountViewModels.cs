@@ -48,10 +48,15 @@ namespace HospiceNiagara.Models
 
     public class LoginViewModel
     {
+        public string Id { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
+
+
+        public bool EmailConfirmed { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

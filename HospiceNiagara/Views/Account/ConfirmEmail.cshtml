@@ -1,10 +1,60 @@
-﻿{
-    ViewBag.Title = "Confirm Email";
-}
+﻿@model HospiceNiagara.Models.LoginViewModel
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
-</div>
+<link rel="stylesheet" href="~/Content/login_page.css" />
+<style>
+    #login-content div {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+</style>
+
+<div class="col-md-4 col-sm-6 col-sm-offset-3 col-md-offset-4" id="login-content">
+    <h2 class="col-md-10 col-md-offset-2">Change Temporary Password</h2>
+    @using (Html.BeginForm("ConfirmEmail", "Account", FormMethod.Post, new { @class = "" }))
+    {
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="text-danger col-md-8 col-md-offset-2">
+            @Html.ValidationMessage("Password")
+            @Html.ValidationMessage("ErrorOldPassword")
+            <input type="hidden" name="id" />
+        </div>
+        <br />
+        <div class="form-group login-email">
+            <div class="input-group col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10" style="padding-bottom:0px !important;">
+                <span class="input-group-addon glyphicon glyphicon-envelope"></span>
+                <input class="form-control" type="text" name="Email" readonly value="@Model.Email" />
+            </div>
+        </div>
+
+    <div class="col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10">
+        <div class="input-group">
+            <span class="input-group-addon glyphicon glyphicon-lock"></span>
+            <input class="form-control" type="password" required name="oldPassword" placeholder="Old Password" />
+        </div>
+    </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10">
+            <div class="input-group">
+                <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                <input class="form-control" type="password" required name="password" placeholder="New Password" />
+            </div>
+        </div>
+
+
+        <div class="col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10">
+            <div class="input-group">
+                <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                <input class="form-control" type="password" required name="passwordConfirmed" placeholder="Re-enter Password" />
+            </div>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10">
+            <input type="submit" value="Confirm Email" class="btn btn-primary btn-block" />
+        </div>
+
+    <div class="col-md-8 col-md-offset-2 col-sm-offset-1 col-sm-10">
+        <a href="@Url.Action("Login","Account")" class="btn btn-danger btn-block">Back To Login Page</a>
+    </div>
+        }
+    </div>
