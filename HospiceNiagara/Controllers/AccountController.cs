@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HospiceNiagara.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net.Mail;
+using System.Net;
 
 namespace HospiceNiagara.Controllers
 {
@@ -147,7 +149,13 @@ namespace HospiceNiagara.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             //Get all roles from db
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");
+            //When creating user majority is volunteer so make it selected value
+            
+            HelperClass helperClass = new HelperClass();
+
+            //allow selected drop down list to be volunteer
+            var selectedValue = helperClass.GetRoleValueByName("Volunteer");
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", selectedValue);            
 
             //assign roles to a list
             var rolelist = roles.ToList();
@@ -160,15 +168,38 @@ namespace HospiceNiagara.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string roleID)
         {
             if (ModelState.IsValid)
             {
+                //Initializers
+                ApplicationDbContext db = new ApplicationDbContext();
+                HelperClass helperClass = new HelperClass();
+
+
+                SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);
+
+                //assign roles to a list
+                var rolelist = roles.ToList();
+                ViewBag.RolesList = rolelist;      
+
+                //check email to see if its already registered, if it is add error and return view
+                if (helperClass.EmailExist(model.Email))
+                {                   
+                        //there is another email in the database with that name already add error to model
+                        ModelState.AddModelError("Email", "E-Mail already registered");                                                      
+                        return View(model);                    
+                }
+
+                //Generate Random Password
+                string generatedPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
+                         
+
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    FirstName = model.FirstName,
+                    FirstName = model.FirstName,                    
                     LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber,
                     PhoneExt = model.PhoneExt,
@@ -178,10 +209,31 @@ namespace HospiceNiagara.Controllers
                     Bio = model.Bio
                 };
 
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await UserManager.CreateAsync(user, generatedPassword);
                 if (result.Succeeded)
                 {
-                    ApplicationDbContext db = new ApplicationDbContext();
+                    //once a user is created send them an email
+                    SmtpClient client = new SmtpClient("smtp-mail.outlook.com", 587);
+                    client.Credentials = new NetworkCredential("morozoandrei@outlook.com","Shad0w!59");
+                    client.EnableSsl = true;
+
+                    MailMessage mailMessage = new MailMessage();
+                    mailMessage.From = new MailAddress("morozoandrei@outlook.com");
+                    mailMessage.To.Add(model.Email);
+                    mailMessage.Subject = "Test Email";
+                    mailMessage.Body = "Hello " + 
+                                        model.FirstName +
+                                        " login to your new Hospice Niagara portal at <WebsiteURLHERE>" +
+                                        "with temporary password of " + generatedPassword;
+
+
+                    string message = WebUtility.HtmlEncode(
+                        "<h1>Hello" + model.FirstName + "</h1> <br /><br />" +
+                        "<p>Welcome to Hospice Niagara your account</p>"
+                        );
+
+                    client.Send(mailMessage);
+
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 

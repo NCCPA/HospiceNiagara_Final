@@ -11,6 +11,8 @@ using HospiceNiagara.Models.ViewModels;
 using PagedList;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Text;
+using System.Data.Entity.Validation;
 
 namespace HospiceNiagara.Controllers
 {
@@ -18,6 +20,7 @@ namespace HospiceNiagara.Controllers
     public class AdminMembersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private HelperClass helperClass = new HelperClass();
 
         // GET: AdminMembers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -40,7 +43,7 @@ namespace HospiceNiagara.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            //Grab all Meetings
+
             var users = from m in db.Users
                            select m;
 
@@ -81,7 +84,9 @@ namespace HospiceNiagara.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
                        
-            ApplicationUser memberViewModel = db.Users.Find(id);      
+            ApplicationUser memberViewModel = db.Users.Find(id);
+
+            ViewBag.roleName = helperClass.roleNameByUserId(id);
 
             if (memberViewModel == null)
             {
@@ -90,11 +95,16 @@ namespace HospiceNiagara.Controllers
             return View(memberViewModel);
         }
 
+        //THIS IS NOT BEING USED go to accountController/Register for create user
         // GET: AdminMembers/Create
         public ActionResult Create()
         {
             //Get all roles from db
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");
+
+            //When creating user majority is volunteer so make it selected value
+            var selectedValue = helperClass.GetRoleValueByName("Volunteer");
+
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", selectedValue);
 
             //assign roles to a list
             var rolelist = roles.ToList();
@@ -114,6 +124,7 @@ namespace HospiceNiagara.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
@@ -154,6 +165,12 @@ namespace HospiceNiagara.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser memberViewModel = db.Users.Find(id);
+
+            //get roles and add to list
+            ViewBag.RolesList = helperClass.getRolesList(id);
+
+            var member = db.Users.Include(f => f.Roles);
+            
             if (memberViewModel == null)
             {
                 return HttpNotFound();
@@ -166,15 +183,41 @@ namespace HospiceNiagara.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,IsContact,Position,PositionDescription,Bio")] ApplicationUser memberViewModel)
+        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,IsContact,Position,PositionDescription,Bio")] ApplicationUser memberViewModel, string roleID)
         {
+            
+
             if (ModelState.IsValid)
             {
+                //check email
+                if (!helperClass.CurrentEmail(memberViewModel.Id, memberViewModel.Email))
+                {
+                    //Since the current email is not the same then make sure it is avialable in the database
+                    try
+                    {
+                        //if it bring back 1 user with that email then
+                        var user = db.Users.Single(m => m.Email == memberViewModel.Email);
+                        
+                        memberViewModel.Email = user.Email ;
+                    }
+                    catch (Exception)
+                    {
+                        //there is another email in the database with that name already add error to model
+                        ModelState.AddModelError("Email", "E-Mail already registered");
+                        return View(memberViewModel);                        
+                    }
+                }
+
+                //if they own the currently selected email, then add the required username to it.
+                memberViewModel.UserName = memberViewModel.Email;
                 db.Entry(memberViewModel).State = EntityState.Modified;
-                db.SaveChanges();
+                SaveChanges(db);
+
+                //Removes user from old role, adds to new role
+                helperClass.ChangeRoles(memberViewModel.Id, roleID);
+
                 return RedirectToAction("Index");
             }
-
 
             return View(memberViewModel);
         }
@@ -212,6 +255,34 @@ namespace HospiceNiagara.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // Method For Finding InnerException
+        private void SaveChanges(DbContext context)
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                ); // Add the original exception as the innerException
+            }
         }
     }
 }

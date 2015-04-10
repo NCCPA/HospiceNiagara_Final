@@ -39,9 +39,6 @@
                 Phone Extension
             </th>
             <th>
-                Contact
-            </th>
-            <th>
                 Position Title
             </th>
             <th>
@@ -67,17 +64,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneExt)
-                </td>
-                <td>
-                    @if (item.IsContact)
-                    {
-                        <p>Yes</p>
-                    }
-                    else
-                    {
-                        <p>No</p>
-                    }
-                </td>
+                </td>              
                 <td>
                     @Html.DisplayFor(modelItem => item.Position)
                 </td>

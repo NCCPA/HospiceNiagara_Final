@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AdminFoldersController.cs" />
     <Compile Include="Controllers\AdminMeetingsController.cs" />
     <Compile Include="Controllers\AdminMembersController.cs" />
+    <Compile Include="HelperClass.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HospiceAnnouncementsController.cs" />
     <Compile Include="Controllers\HospiceDeathsController.cs" />
@@ -250,6 +251,14 @@
     <Compile Include="Migrations\201504070017168_obituary.cs" />
     <Compile Include="Migrations\201504070017168_obituary.Designer.cs">
       <DependentUpon>201504070017168_obituary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504090439121_added_EmailAuthentication_NoDuplicates.cs" />
+    <Compile Include="Migrations\201504090439121_added_EmailAuthentication_NoDuplicates.Designer.cs">
+      <DependentUpon>201504090439121_added_EmailAuthentication_NoDuplicates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504090444008_removedUniqueEmailJSON.cs" />
+    <Compile Include="Migrations\201504090444008_removedUniqueEmailJSON.Designer.cs">
+      <DependentUpon>201504090444008_removedUniqueEmailJSON.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -499,6 +508,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504070017168_obituary.resx">
       <DependentUpon>201504070017168_obituary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504090439121_added_EmailAuthentication_NoDuplicates.resx">
+      <DependentUpon>201504090439121_added_EmailAuthentication_NoDuplicates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504090444008_removedUniqueEmailJSON.resx">
+      <DependentUpon>201504090444008_removedUniqueEmailJSON.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

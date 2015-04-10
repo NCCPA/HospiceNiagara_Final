@@ -44,7 +44,7 @@ namespace HospiceNiagara.Models
 
         [Display(Name = "Bio")]
         [StringLength(250, ErrorMessage = "Bio Cannot be More than 250 Charactes")]
-        public string Bio { get; set; }        
+        public string Bio { get; set; }
 
         //Fields for Profile Picture
         public byte[] ProfilePicture { get; set; }
