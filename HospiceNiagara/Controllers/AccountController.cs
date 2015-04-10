@@ -202,19 +202,18 @@ namespace HospiceNiagara.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, string roleID)
-        {
+        {            
+            ApplicationDbContext db = new ApplicationDbContext();
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);
+
+            //assign roles to a list
+            var rolelist = roles.ToList();
+            ViewBag.RolesList = rolelist;      
+
             if (ModelState.IsValid)
             {
-                //Initializers
-                ApplicationDbContext db = new ApplicationDbContext();
-                HelperClass helperClass = new HelperClass();
-
-
-                SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);
-
-                //assign roles to a list
-                var rolelist = roles.ToList();
-                ViewBag.RolesList = rolelist;      
+                
+                HelperClass helperClass = new HelperClass();              
 
                 //check email to see if its already registered, if it is add error and return view
                 if (helperClass.EmailExist(model.Email))
