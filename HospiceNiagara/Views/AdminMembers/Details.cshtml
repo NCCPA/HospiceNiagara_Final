@@ -4,96 +4,43 @@
     ViewBag.Title = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneExt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneExt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsContact)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsContact)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Position)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Position)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PositionDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PositionDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Bio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Bio)
-        </dd>
-        <dt>
-            Main Role
-        </dt>
-        
-        <dd>
-            @ViewBag.RoleName
-        </dd>        
-        <dt>
-           &nbsp;
-        </dt>
-
-        <dd>
-            @Html.ActionLink("Edit", "Edit", new { Id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </dd>
-    </dl>
+<div class="page-header">
+    <h2>Profile - <small>@Model.FirstName @Model.LastName</small></h2>
 </div>
+
+<div class="col-md-4">
+    <div class="profilePicture">
+        <img src="~/img/Andrei_DisplayPicture.jpg" class="img-responsive" />
+    </div>    
+</div>
+
+<div class="col-md-8">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Profile Information</div>
+        <div class="panel-body">
+            <p><b>Name:</b> @Model.FirstName @Model.LastName</p>
+            <p><b>Bio:</b> @Model.Bio</p>
+            <p><b>Position:</b> @Model.Position</p>
+            <p><b>Position Description:</b> @Model.PositionDescription</p>
+
+            <p>
+                <b>Phone Number:</b> @Html.DisplayFor(m => m.PhoneNumber)
+                @if (Model.PhoneExt != "")
+                {
+                    <span> <b>Ext:</b> @Model.PhoneExt </span>
+                }
+            </p>
+            <p><b>Email: </b> @Model.Email</p>            
+            <p><b>Website Role:</b> @ViewBag.roleName</p>
+
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-danger" })
+        </div>
+
+        <!-- Table -->
+        <table class="table"></table>
+    </div>
+</div>
+
+

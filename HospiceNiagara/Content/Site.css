@@ -408,3 +408,8 @@ hr {
 #resize  #large     {  font-size:20% !important;}
 
 /*End of new Sidebar Style*/
+
+
+.profilePicture {
+    height:auto;
+}

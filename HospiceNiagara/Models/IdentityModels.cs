@@ -22,15 +22,19 @@ namespace HospiceNiagara.Models
         }
 
         //Member Additional Information
-        [Required(ErrorMessage="Fist Name Cannot be empty")]
-        [Display(Name="First Name")]
+        [Required(ErrorMessage = "Fist Name Cannot be empty")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage="Last Name cannot be empty")]
-        [Display(Name="Last Name")]
-        public string LastName { get; set; }        
+        [DisplayFormat(DataFormatString = "{0:###-###-####}")]
+        [StringLength(10, ErrorMessage = "cannot Have more than 10 digits, do not input - or () ")]
+        public override string PhoneNumber { get; set; }
 
-        [Display(Name="Phone Extension")]
+        [Required(ErrorMessage = "Last Name cannot be empty")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Phone Extension")]
         public string PhoneExt { get; set; }
 
         [Display(Name = "View in Contacts")]
@@ -71,9 +75,9 @@ namespace HospiceNiagara.Models
         public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
 
-        
 
-        
+
+
 
     }
 }

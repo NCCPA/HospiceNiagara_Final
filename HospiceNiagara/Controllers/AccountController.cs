@@ -12,6 +12,7 @@ using HospiceNiagara.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net.Mail;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace HospiceNiagara.Controllers
 {
@@ -311,6 +312,15 @@ namespace HospiceNiagara.Controllers
                 ModelState.AddModelError("Password", "New password and confirm password do not match");
                 return View(model);
             }
+
+            //Check to make sure password contains 1 uppcase or 1 symbol
+            Regex r = new Regex(@"^[A-Za-z]+\d+.*$");
+                if (!r.Match(password).Success)
+                {
+                    ModelState.AddModelError("passwordFormat", "Password must contain 1 uppercase, digit and symbol.");
+                    return View(model);
+                }
+
             else //everything is good change user password
             {
                 var user = UserManager.Find(model.Email,oldPassword); //find user
@@ -356,27 +366,59 @@ namespace HospiceNiagara.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+                return View(model);
+            }            
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            //first check if the email is registered with us            
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var existingUser = db.Users.Where(x => x.Email == model.Email);
+
+            if (existingUser.Count() == 0)
+            {
+                ModelState.AddModelError("no-email", "This E-mail is not registered with us, check spelling");
+                return View(model);
             }
+            else //email exists change password to new generated email
+            {
+                var randomPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
+                var resetUser = UserManager.FindByEmail(model.Email);
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                UserManager.RemovePassword(resetUser.Id);
+                UserManager.AddPassword(resetUser.Id, randomPassword);
+                
+                //removed confirmed, this will make them change their password
+                var linqUser = db.Users.Where(m => m.Id == resetUser.Id).SingleOrDefault();
+                linqUser.EmailConfirmed = false;
+                db.SaveChanges();
+
+                //Send email with the new password
+                //once a user is created send them an email
+                SmtpClient client = new SmtpClient("smtp-mail.outlook.com", 587);
+                client.Credentials = new NetworkCredential("morozoandrei@outlook.com", "Shad0w!59");
+                client.EnableSsl = true;
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("morozoandrei@outlook.com");
+                mailMessage.To.Add(model.Email);
+                mailMessage.Subject = "Hospice Niagara Account Password Reset";
+
+                string bodyMessage = "<h1>Hello " + resetUser.FirstName + " " + resetUser.LastName + "</h1>" +
+                   "<p>New Password is listed below, once entered you will be promted to change it</p>" +
+                   "<p>Login Portal: http://www.hospiceniagara/portal.com</p>" +
+                   "<p>Temporary Password: " + randomPassword + "</p>";
+                   
+
+                mailMessage.IsBodyHtml = true;
+                mailMessage.Body = bodyMessage;
+                client.Send(mailMessage);
+
+                return RedirectToAction("Login");
+            }            
         }
 
         //

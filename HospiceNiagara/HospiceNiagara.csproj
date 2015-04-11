@@ -260,6 +260,14 @@
     <Compile Include="Migrations\201504090444008_removedUniqueEmailJSON.Designer.cs">
       <DependentUpon>201504090444008_removedUniqueEmailJSON.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504102304384_updated-Phonenumber-format.cs" />
+    <Compile Include="Migrations\201504102304384_updated-Phonenumber-format.Designer.cs">
+      <DependentUpon>201504102304384_updated-Phonenumber-format.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504102312253_DataformatPhoneNumber.cs" />
+    <Compile Include="Migrations\201504102312253_DataformatPhoneNumber.Designer.cs">
+      <DependentUpon>201504102312253_DataformatPhoneNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
@@ -325,6 +333,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\Andrei_DisplayPicture.jpg" />
     <Content Include="img\login_background.jpg" />
     <Content Include="img\dp.jpeg" />
     <Content Include="img\Hopspice-Niagara-Logo.png" />
@@ -447,10 +456,11 @@
     <Content Include="Views\HospiceFiles\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Profile\" />
     <Folder Include="Views\RolesViewModels\" />
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +524,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504090444008_removedUniqueEmailJSON.resx">
       <DependentUpon>201504090444008_removedUniqueEmailJSON.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504102304384_updated-Phonenumber-format.resx">
+      <DependentUpon>201504102304384_updated-Phonenumber-format.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504102312253_DataformatPhoneNumber.resx">
+      <DependentUpon>201504102312253_DataformatPhoneNumber.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

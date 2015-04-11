@@ -1,0 +1,42 @@
+﻿@model HospiceNiagara.Models.ApplicationUser
+
+<div class="page-header">
+    <h2>Profile - <small>@Model.FirstName @Model.LastName</small></h2>
+</div>
+
+<div class="col-md-4">
+    <div class="profilePicture">
+        <img src="~/img/Andrei_DisplayPicture.jpg" class="img-responsive" />
+    </div>
+    <a href="#" class="btn btn-primary btn-block">Upload New Picture</a>
+</div>
+
+<div class="col-md-8">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Profile Information</div>
+        <div class="panel-body">
+            <p><b>Name:</b> @Model.FirstName @Model.LastName</p>            
+            <p><b>Bio:</b> @Model.Bio</p>
+            <p><b>Position:</b> @Model.Position</p>
+            <p><b>Position Description:</b> @Model.PositionDescription</p>
+            
+            <p>
+            <b>Phone Number:</b> @Html.DisplayFor(m => m.PhoneNumber)
+                @if(Model.PhoneExt != "")
+                {
+                <span> <b>Ext:</b> @Model.PhoneExt </span>
+                }
+            </p>
+            <p><b>Email: </b> @Model.Email</p>            
+            
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+            
+        </table>
+    </div>
+</div>
+

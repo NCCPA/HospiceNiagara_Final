@@ -185,28 +185,20 @@ namespace HospiceNiagara.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,IsContact,Position,PositionDescription,Bio")] ApplicationUser memberViewModel, string roleID)
         {
+            //get roles and add to list
+            ViewBag.RolesList = helperClass.getRolesList(memberViewModel.Id);
             
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                //check email
-                if (!helperClass.CurrentEmail(memberViewModel.Id, memberViewModel.Email))
-                {
-                    //Since the current email is not the same then make sure it is avialable in the database
-                    try
-                    {
-                        //if it bring back 1 user with that email then
-                        var user = db.Users.Single(m => m.Email == memberViewModel.Email);
-                        
-                        memberViewModel.Email = user.Email ;
-                    }
-                    catch (Exception)
-                    {
-                        //there is another email in the database with that name already add error to model
-                        ModelState.AddModelError("Email", "E-Mail already registered");
-                        return View(memberViewModel);                        
-                    }
-                }
+                return View(memberViewModel);
+            }
+
+            //find all users with same email, should only be 1 if it exists
+            var selectedUser = db.Users.Where(m => m.Email == memberViewModel.Email);
+
+            //check email, if 0 users have this email OR this users current owns this email allow him to update.
+            if ( selectedUser.Count() == 0 ||  helperClass.CurrentEmail(memberViewModel.Id, memberViewModel.Email))
+            {
 
                 //if they own the currently selected email, then add the required username to it.
                 memberViewModel.UserName = memberViewModel.Email;
@@ -218,8 +210,13 @@ namespace HospiceNiagara.Controllers
 
                 return RedirectToAction("Index");
             }
+            else
+            {
+                //there is another email in the database with that name already add error to model
+                ModelState.AddModelError("Email", "E-Mail already registered");
+                return View(memberViewModel);                        
 
-            return View(memberViewModel);
+            }                                       
         }
 
         // GET: AdminMembers/Delete/5
