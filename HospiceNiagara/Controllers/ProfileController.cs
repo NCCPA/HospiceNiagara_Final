@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,11 +15,12 @@ namespace HospiceNiagara.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
-        HelperClass helperClass = new HelperClass();
+        public HelperClass helperClass = new HelperClass();
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
         // GET: Profile
+        [HttpGet]
         public ActionResult Index()
         {
             //Get currently logged in Person
@@ -28,6 +30,41 @@ namespace HospiceNiagara.Controllers
 
             return View(userInfo);
         }
+        
+        //POST: Picture Upload
+        [HttpPost]
+        public ActionResult UploadPicture()
+        {
+            //Get Current User Depending on Profile Location - Admin or Owner
+            var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+            var manager = new UserManager<ApplicationUser>(store);
+
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
+            string mimeType = Request.Files[0].ContentType;
+            string fileName = Path.GetFileName(Request.Files[0].FileName);
+            int fileLength = Request.Files[0].ContentLength;
+
+            if (!(fileName == "" || fileLength == 0))//Looks like we have a file!!!
+            {
+                Stream fileStream = Request.Files[0].InputStream;
+                byte[] fileData = new byte[fileLength];
+                fileStream.Read(fileData, 0, fileLength);
+
+                //Add File To user
+                currentUser.ProfilePicture = fileData;
+                currentUser.MimeType = mimeType;
+
+                //Update User and Save the current Changes
+                store.Context.SaveChanges();                
+                
+                return RedirectToAction("Index");
+            }
+
+            return View(currentUser);
+        }
+
+
 
         // GET: Edit
         [HttpGet]
@@ -43,6 +80,7 @@ namespace HospiceNiagara.Controllers
             return View(memberViewModel);
         }
 
+        // POST: Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,Bio")] ApplicationUser model)
@@ -56,7 +94,7 @@ namespace HospiceNiagara.Controllers
             var selectedUser = db.Users.Where(m => m.Email == model.Email);
 
             //user null because email is not taken update user
-            if ( selectedUser.Count() == 0 || helperClass.CurrentEmail(model.Id,model.Email) )
+            if (selectedUser.Count() == 0 || helperClass.CurrentEmail(model.Id, model.Email))
             {
                 //get information
                 var userFound = db.Users.Where(m => m.Id == model.Id).SingleOrDefault();
@@ -95,17 +133,24 @@ namespace HospiceNiagara.Controllers
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 
 
-            //If Id is null then not coming from admin page
+            //If Id is null then continue.
             if (id != "")
             {
                 //Get Current Id and Grab Profile Picture
                 var currentUserId = User.Identity.GetUserId();
                 var curUser = manager.FindById(currentUserId);
-                Response.Buffer = true;
-                Response.Clear();
-                Response.ContentType = curUser.MimeType;
-                Response.BinaryWrite(curUser.ProfilePicture);
-                Response.End();
+
+                if (curUser != null)
+                {
+                    if (curUser.ProfilePicture != null)
+                    {
+                        Response.Buffer = true;
+                        Response.Clear();
+                        Response.ContentType = curUser.MimeType;
+                        Response.BinaryWrite(curUser.ProfilePicture);
+                        Response.End();
+                    }
+                }
             }
         }
     }

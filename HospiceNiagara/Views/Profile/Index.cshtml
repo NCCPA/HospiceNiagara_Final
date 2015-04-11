@@ -6,9 +6,17 @@
 
 <div class="col-md-4">
     <div class="profilePicture">
-        <img src="~/img/Andrei_DisplayPicture.jpg" class="img-responsive" />
+        @if (Model.ProfilePicture != null) {
+            <img src="@Url.Action("ShowPic", "Profile", new { id = Model.Id })" class="img-responsive" style="max-height:400px; overflow:hidden" alt="portfolio Picture" />
+        }
+        else
+        {
+            <img src="~/img/login_background.jpg" class="img-responsive" style="max-height:400px; overflow:hidden" alt="Default Background for Users without portfolio Pictures" />
+        }
     </div>
-    <a href="#" class="btn btn-primary btn-block">Upload New Picture</a>
+    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+        <span class="glyphicon glyphicon-plus-sign pull-left"></span> Upload Picture
+    </button>
 </div>
 
 <div class="col-md-8">
@@ -40,3 +48,30 @@
     </div>
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Upload Profile Picture</h4>
+            </div>
+            @using (Html.BeginForm("UploadPicture", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+
+                    <h4>Profile Picture <small>Preferably an identity picture</small></h4>                                                                                        
+
+                    <!-- Add What is need to make upload work here and the "Upload Button to submit"-->
+                    <input type="file" class="file" id="input-1a" name="FileUpload1" />
+
+                </div>
+                <div class="modal-footer">                    
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>                    
+                </div>
+            }
+        </div>
+    </div>
+</div>

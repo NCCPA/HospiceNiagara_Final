@@ -1,23 +1,26 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    <div class="profilePic">
-        <img class="img-responsive" src="~/img/login_background.jpg">
-    </div>
 
-    <!--<li class="col-md-12"><img class="img-responsive" src="@@Url.Action("ShowPic", "Profile", new { id = User.Identity.GetUserId() })"></li> -->
-    <li data-toggle="collapse" data-target="#logoutNavHeader" class="collapsed">
-        <a><i class="fa fa-sign-out invisible"></i>Welcome @User.Identity.GetUserName()!</a>
+<div class="profilePicture">
+    <img src="@Url.Action("ShowPic", "Profile", new { id = User.Identity.GetUserId() })" class="img-responsive" id="navbarpic" style="max-height:400px; overflow:hidden" alt="portfolio Picture" />            
+</div>
+
+<a href="@Url.Action("Index", "Profile")" class="nav-link">
+    <li data-toggle="collapse" data-target="#profilePicturenav" class="collapsed" style="padding-left:15px;">
+        <i class="fa fa-user"></i> Profile
     </li>
-    <li data-toggle="collapse" data-target="#logoutNav" class="collapsed">
-        <a href="@Url.Action("LogOff", "Account")"><i class="fa fa-sign-out"></i> Sign out</a>
+</a>
+
+<a href="@Url.Action("LogOff", "Account")" class="nav-link">
+    <li data-toggle="collapse" data-target="#logoutNav" class="collapsed" style="padding-left:15px;">
+        <i class="fa fa-sign-out"></i> Sign out
     </li>
+</a>
 
-}
-else
-{
-
-    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-
-}
+<!-- Hide Image if user had not uploaded one yet-->
+<script>
+    $(document).ready(function () {
+        $('#navbarpic').error(function () {
+            $(this).hide();
+        });
+    });
+</script>

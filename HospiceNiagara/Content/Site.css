@@ -207,7 +207,7 @@ textarea {
   font-family: verdana;
   font-size: 12px;
   font-weight: 200;
-  background-color: #191970;
+  background-color: #211775;
   position: fixed;
   top: 0px;
   /*width: 250px;*/
@@ -412,4 +412,12 @@ hr {
 
 .profilePicture {
     height:auto;
+}
+
+
+.welcomePerson {
+    text-align:center;    
+    padding:10px;
+    font-size:medium;
+    
 }
