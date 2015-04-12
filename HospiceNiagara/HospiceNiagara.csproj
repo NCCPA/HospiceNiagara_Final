@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AdminFoldersController.cs" />
     <Compile Include="Controllers\AdminMeetingsController.cs" />
     <Compile Include="Controllers\AdminMembersController.cs" />
+    <Compile Include="Controllers\AdminSubRolesController.cs" />
     <Compile Include="HelperClass.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HospiceAnnouncementsController.cs" />
@@ -267,6 +268,14 @@
     <Compile Include="Migrations\201504102312253_DataformatPhoneNumber.cs" />
     <Compile Include="Migrations\201504102312253_DataformatPhoneNumber.Designer.cs">
       <DependentUpon>201504102312253_DataformatPhoneNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504121946042_subRoles_implementation.cs" />
+    <Compile Include="Migrations\201504121946042_subRoles_implementation.Designer.cs">
+      <DependentUpon>201504121946042_subRoles_implementation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504122133083_required_SubRole_Name_Added.cs" />
+    <Compile Include="Migrations\201504122133083_required_SubRole_Name_Added.Designer.cs">
+      <DependentUpon>201504122133083_required_SubRole_Name_Added.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -468,6 +477,10 @@
     <Content Include="Views\Roles\Create.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\AdminSubRoles\Index.cshtml" />
+    <Content Include="Views\AdminSubRoles\Create.cshtml" />
+    <Content Include="Views\AdminSubRoles\Delete.cshtml" />
+    <Content Include="Views\AdminSubRoles\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -540,6 +553,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504102312253_DataformatPhoneNumber.resx">
       <DependentUpon>201504102312253_DataformatPhoneNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504121946042_subRoles_implementation.resx">
+      <DependentUpon>201504121946042_subRoles_implementation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504122133083_required_SubRole_Name_Added.resx">
+      <DependentUpon>201504122133083_required_SubRole_Name_Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

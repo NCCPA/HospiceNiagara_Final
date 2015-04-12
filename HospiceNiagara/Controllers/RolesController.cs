@@ -17,7 +17,8 @@ namespace HospiceNiagara.Controllers
         // GET: Roles
         public ActionResult Index()
         {
-            return View(db.Roles.ToList());
+            var roleList = db.Roles.Where(x => x.Name != "SuperAdmin"); // not allowed to touch SuperAdmin since it controlls everything
+            return View(roleList.ToList());
         }
 
 
