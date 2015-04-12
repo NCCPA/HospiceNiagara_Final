@@ -68,15 +68,15 @@
                 <br />
                 <ul class="pager wizard" id="pagerBottom">
                     <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                    <li class="previous"><a href="#">Previous</a></li>
-                    <li class="next last" style="display:none;"><a href="#">Last</a></li>
-                    <li class="next"><a href="#">Next</a></li>
+                    <li class="previous"><a href="#" class="btn btn-primary">Previous</a></li>
+                    <li class="next last" style="display:none;"><a href="#" class="btn btn-primary">Last</a></li>
+                    <li class="next"><a href="#" class="btn btn-primary">Next</a></li>
                 </ul>
             </div>
         </div>
     }
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-danger" })
     </div>
 
 </div>
