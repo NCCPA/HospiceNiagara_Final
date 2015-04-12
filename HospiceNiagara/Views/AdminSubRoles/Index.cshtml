@@ -1,0 +1,49 @@
+﻿@model IEnumerable<HospiceNiagara.Models.DatabaseModels.SubRoles>
+
+@{
+    ViewBag.Title = "Sub Roles";
+}
+<div class="page-header">
+    <h2>Sub Roles</h2>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-1">Main Role: </label>
+    <div class="">
+        @Html.DropDownList("RolesList", null, htmlAttributes: new { @class = "form-control", @Name = "roleID" })
+    </div>
+</div>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>       
+        <th>@Html.ActionLink("Create New", "Create", "", new { @class = "btn-success btn" })</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |            
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<!-- User Ajax to instant filter by drop down list-->
+<script>
+    $(document).ready(function () {
+
+        //Post to subroles bring in roles that are 
+        $.post("/AdminSubRoles/Index", { roleID: $("#roleID :selected").text() }, function (data) {
+
+        });
+    });
+</script>

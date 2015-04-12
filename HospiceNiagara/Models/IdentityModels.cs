@@ -74,7 +74,7 @@ namespace HospiceNiagara.Models
         public DbSet<Meetings> Meetings { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
-
+        public DbSet<SubRoles> SubRoles { get; set; }
 
 
 
