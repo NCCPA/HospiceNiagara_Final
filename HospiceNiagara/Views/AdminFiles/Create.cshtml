@@ -15,7 +15,7 @@
                 <div class="navbar-inner">
                     <div class="container">
                         <ul>
-                            <li><a href="#tab1" data-toggle="tab">1. Upload File</a></li>
+                            <li><a href="#tab1" data-toggle="tab"><i id="errorTab"></i> 1. upload file</a></li>
                             <li><a href="#tab2" data-toggle="tab">2. Add Permissions</a></li>
                             <li><a href="#tab3" data-toggle="tab">3. Review Session</a></li>
                         </ul>
@@ -59,15 +59,16 @@
                     </div>
 
                 </div>
-                <div class="tab-pane" id="tab3">
-                    <label id="fileDesc"></label><br />
-                    <input type="submit" value="Upload File(s)"/>
+                <div class="tab-pane" id="tab3">     
+                    <div id="errorReview"></div>              
+                    <div id="reviewPage"></div>
+                    <input type="submit" value="Upload File(s)" class="btn btn-primary"/>
                 </div>
 
                 <br />
                 <ul class="pager wizard" id="pagerBottom">
                     <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                    <li class="previous"><a href="#" class="btn btn-default">Previous</a></li>
+                    <li class="previous"><a href="#">Previous</a></li>
                     <li class="next last" style="display:none;"><a href="#">Last</a></li>
                     <li class="next"><a href="#">Next</a></li>
                 </ul>
@@ -81,7 +82,16 @@
 </div>
 
 <script>
+    //Happen outside of document before page is loaded.
+    $("#fileUpload").fileinput({
+        showUpload: false
+    });
+
+    //once page is loaded, you're a wizard Harry!
     $(document).ready(function () {
+
+        //Remove Upload from the first Page
+
         $('#rootwizard').bootstrapWizard({
             onTabShow: function (tab, navigation, index) {                
                 var $total = navigation.find('li').length;
@@ -102,23 +112,66 @@
 
             $.each(filesSelected, function (index, value) {
                 tagID = "fileID" + (index + 1);
-                descriptionTag += '<label>File: ' + (index + 1) + '</label><input type="text" id="' + tagID + '"  class="form-control" required name="fileDesc" />';
+                descriptionTag += '<label>File: ' + (index + 1) + '</label><input type="text" id="' + tagID + '"  class="form-control" name="fileDesc" />';
             });
 
             $('#descriptionFields').html(descriptionTag);
         });
 
+        var error = "";
+        //validate the description fields
+        $('form').submit(function (e) {
+            var fileDescriptions = $('[name="fileDesc"');
+            var filesSelected = document.getElementById('fileUpload').files;
+            var validateDesc = true;
 
-        $("#pagerBottom, [data-toggle='tab']").click(function () {
+            $.each(fileDescriptions, function (index, value) {
+                if (value.value == "") {
+                    validateDesc = false;
+                }
+            });
 
-            var fileDesc = $('#fileDesc').val();
-            var permissions = $("[name='permissions']");
-            $('#fileDescReview').text(fileDesc);
+            if (!validateDesc) {
+                error = '<span class="text-danger">Description of Files cannot be empty</span><br/><br/>';
+                $('#errorReview').html(error);
+                $('#errorTab').html('<span class="text-danger">*</span>');
+                e.preventDefault();                
+            }
+            
+            if (fileDescriptions.length == 0) {
+                error = '<span class="text-danger">No Files Selected, Select Files before uplode.</span><br/><br/>';
+                $('#errorReview').html(error);
+                $('#errorTab').html('<span class="text-danger">*</span>');
+                e.preventDefault();
+            }
+
         });
 
-        $("#fileUpload").fileinput({
-            showUpload: false
+        $("#pagerBottom, [data-toggle='tab']").click(function () {                                   
+            var output = "";
+            var filesSelected = document.getElementById('fileUpload').files;
+            var folderSelected = $('#FolderID :selected').text();
+            var fileDescriptions = $('[name="fileDesc"');
+            
+            
+            output = '<label>Folder Selected: </label>' + ' ' + folderSelected + '<br />';
+
+            //loop throught files selected and descriptions
+            $.each(filesSelected, function (index, value) {
+                output += '<label>File Name:</label> ' + value.name + '<br />' + '<label>File Description</label> ' + fileDescriptions[index].value + '<br /> <br />';                
+            });
+
+            
+
+            $('#reviewPage').html(output);
+
+
         });
+
+
+
+
+
 
 
     });

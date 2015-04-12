@@ -101,6 +101,12 @@ namespace HospiceNiagara.Controllers
         {
             try
             {
+                
+                SelectList folders = new SelectList(db.Folders.OrderBy(x => x.FolderName), "ID", "FolderName");
+                var folderList = folders.ToList();                
+                ViewBag.FolderID = folderList;
+
+
                 var index = 0;
                 foreach (HttpPostedFileBase file in FileUpload1)
                 {
@@ -126,15 +132,7 @@ namespace HospiceNiagara.Controllers
                 }
                 SaveChanges(db);
 
-                SelectListItem allOption = new SelectListItem() { Value = "0", Text = "All" };
-                SelectList folders = new SelectList(db.Folders.OrderBy(x => x.FolderName), "ID", "FolderName");
-
-                var folderList = folders.ToList();
-                folderList.Insert(0, allOption);
-
-
-
-                ViewBag.FolderID = folderList;
+               
 
                 return RedirectToAction("Index");
             }
