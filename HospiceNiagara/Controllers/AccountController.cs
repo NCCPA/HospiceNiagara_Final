@@ -314,7 +314,7 @@ namespace HospiceNiagara.Controllers
             }
 
             //Check to make sure password contains 1 uppcase or 1 symbol
-            Regex r = new Regex(@"^[A-Za-z]+\d+.*$");
+            Regex r = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$");
                 if (!r.Match(password).Success)
                 {
                     ModelState.AddModelError("passwordFormat", "Password must contain 1 uppercase, digit and symbol.");

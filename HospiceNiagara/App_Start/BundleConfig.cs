@@ -13,6 +13,7 @@ namespace HospiceNiagara
                         "~/Scripts/jquery-ui-1.11.4.js",
                         "~/Scripts/jquery.timepicker.js",
                         "~/Scripts/fileinput.js",
+                        "~/Scripts/jquery.bootstrap.wizard.js",
                         "~/Scripts/custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

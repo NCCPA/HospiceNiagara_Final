@@ -95,13 +95,65 @@ namespace HospiceNiagara.Controllers
 
         }
 
+        // Post: AdminFiles (Multipul)
+        [HttpPost]
+        public ActionResult Index(HttpPostedFileBase[] FileUpload1, string[] fileDesc, int folderID)
+        {
+            try
+            {
+                var index = 0;
+                foreach (HttpPostedFileBase file in FileUpload1)
+                {
+                    string fileName = System.IO.Path.GetFileName(file.FileName);
+                    string mimeType = file.ContentType;
+                    int fileLength = file.ContentLength;
+
+                    Stream fileStream = file.InputStream;
+                    byte[] fileData = new byte[fileLength];
+                    fileStream.Read(fileData, 0, fileLength);
+
+                    HospiceNiagara.Models.DatabaseModels.File newFile = new HospiceNiagara.Models.DatabaseModels.File
+                    {
+                        FileContent = fileData,
+                        MimeType = mimeType,
+                        FileName = fileName,
+                        FileDescription = fileDesc[index],
+                        FolderID = folderID
+                    };
+
+                    db.Files.Add(newFile);
+                    index++;
+                }
+                SaveChanges(db);
+
+                SelectListItem allOption = new SelectListItem() { Value = "0", Text = "All" };
+                SelectList folders = new SelectList(db.Folders.OrderBy(x => x.FolderName), "ID", "FolderName");
+
+                var folderList = folders.ToList();
+                folderList.Insert(0, allOption);
+
+
+
+                ViewBag.FolderID = folderList;
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ViewBag.Message = "Error while uploading files";
+                return View();
+            }
+        }
+
+        /*
         // POST: adminFiles
         [HttpPost]
-        public ActionResult Index(string name, string fileDesc, int folderID)
+        public ActionResult Index(string fileDesc, int folderID)
         {
             string mimeType = Request.Files[0].ContentType;
+            string fileName = Path.GetFileName(Request.Files[0].FileName);
             int fileLength = Request.Files[0].ContentLength;
-            if (!(name == "" || fileLength == 0))//Looks like we have a file!!!
+            if (!(fileName == "" || fileLength == 0))//Looks like we have a file!!!
             {
                 Stream fileStream = Request.Files[0].InputStream;
                 byte[] fileData = new byte[fileLength];
@@ -111,7 +163,7 @@ namespace HospiceNiagara.Controllers
                 {
                     FileContent = fileData,
                     MimeType = mimeType,
-                    FileName = name,
+                    FileName = fileName,
                     FileDescription = fileDesc,
                     FolderID = folderID
                 };
@@ -121,7 +173,7 @@ namespace HospiceNiagara.Controllers
             }
 
             return RedirectToAction("Index");
-        }
+        }*/
 
         private void SaveChanges(DbContext context)
         {
@@ -247,6 +299,12 @@ namespace HospiceNiagara.Controllers
             db.Files.Remove(file);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public FileContentResult FileDownload(int id)
+        {
+            var theFile = db.Files.Where(f => f.ID == id).SingleOrDefault();
+            return File(theFile.FileContent, theFile.MimeType, theFile.FileName);
         }
 
         protected override void Dispose(bool disposing)

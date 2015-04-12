@@ -5,50 +5,125 @@
 }
 
 <h1>Create</h1>
-         
-@using (Html.BeginForm("", "AdminFiles", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", name = "fileUploadForm" }))
-{
 
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-3">
-                <label for="fileName" class="control-label">File Name</label>
-                <input type="text" id="fileName" class="form-control" required name="name" />
+<div class="col-md-6 col-md-offset-3">
+
+    @using (Html.BeginForm("", "AdminFiles", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", name = "fileUploadForm" }))
+    {
+        <div id="rootwizard">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <ul>
+                            <li><a href="#tab1" data-toggle="tab">1. Upload File</a></li>
+                            <li><a href="#tab2" data-toggle="tab">2. Add Permissions</a></li>
+                            <li><a href="#tab3" data-toggle="tab">3. Review Session</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="bar" class="progress">
+                <div class="bar progress-bar"></div>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane" id="tab1">
+
+                    <div class="form-group">
+                        <div class="row">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="file" id="fileUpload" multiple class="file form-control" name="FileUpload1" />
+                            </div>
+                            <div class="col-md-6">
+
+                                <div id="descriptionFields"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.FolderID, "Folder Name")
+                                @Html.DropDownList("FolderID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.FolderID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <label id="fileDesc"></label><br />
+                    <input type="submit" value="Upload File(s)"/>
+                </div>
+
+                <br />
+                <ul class="pager wizard" id="pagerBottom">
+                    <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                    <li class="previous"><a href="#" class="btn btn-default">Previous</a></li>
+                    <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                    <li class="next"><a href="#">Next</a></li>
+                </ul>
             </div>
         </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
 
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-3">
-                <label for="fileDesc">File Description</label>
-                <input type="text" id="fileDesc" class="form-control" required name="fileDesc" />
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.FolderID, "Folder Name")
-                @Html.DropDownList("FolderID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FolderID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-3">
-                <input type="file" id="fileUpload" class="file form-control" name="FileUpload1" />
-            </div>
-        </div>
-    </div>
-}   
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#rootwizard').bootstrapWizard({
+            onTabShow: function (tab, navigation, index) {                
+                var $total = navigation.find('li').length;
+                var $current = index + 1;
+                var $percent = ($current / $total) * 100;
+                $('#rootwizard').find('.bar').css({ width: $percent + '%' });
+            }
+        });
+
+        //Event Handler for Files Upload clicked - find how many
+        $('#fileUpload').change(function () {
+            var filesSelected = document.getElementById('fileUpload').files;
+            $('#fileLength').text(filesSelected.length);
+
+            var descriptionTag = '<label for="fileDesc">File Description(s)</label><br />';
+            var tagID = "";
+
+
+            $.each(filesSelected, function (index, value) {
+                tagID = "fileID" + (index + 1);
+                descriptionTag += '<label>File: ' + (index + 1) + '</label><input type="text" id="' + tagID + '"  class="form-control" required name="fileDesc" />';
+            });
+
+            $('#descriptionFields').html(descriptionTag);
+        });
+
+
+        $("#pagerBottom, [data-toggle='tab']").click(function () {
+
+            var fileDesc = $('#fileDesc').val();
+            var permissions = $("[name='permissions']");
+            $('#fileDescReview').text(fileDesc);
+        });
+
+        $("#fileUpload").fileinput({
+            showUpload: false
+        });
+
+
+    });
+
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -275,6 +275,7 @@
     <Compile Include="Models\DatabaseModels\File.cs" />
     <Compile Include="Models\DatabaseModels\Folder.cs" />
     <Compile Include="Models\DatabaseModels\Meetings.cs" />
+    <Compile Include="Models\DatabaseModels\SubRoles.cs" />
     <Compile Include="Models\ViewModels\AnnouncementViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -344,6 +345,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\HispiceNiagaraLive - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\HispiceNiagaraLive - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\HospiceNiagara.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\fileinput.js" />
@@ -358,6 +362,10 @@
     <Content Include="Scripts\fileinput_locale_uk.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.bootstrap.wizard.js" />
+    <Content Include="Scripts\jquery.bootstrap.wizard.min.js" />
+    <Content Include="Scripts\jquery.bootstrap.wizard.min.js.map" />
+    <Content Include="Scripts\jquery.bootstrap.wizard.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
@@ -371,7 +379,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

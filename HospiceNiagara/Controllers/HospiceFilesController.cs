@@ -104,6 +104,13 @@ namespace HospiceNiagara.Controllers
             return View(file);
         }
 
+
+        public FileContentResult FileDownload(int id)
+        {
+            var theFile = db.Files.Where(f => f.ID == id).SingleOrDefault();
+            return File(theFile.FileContent, theFile.MimeType, theFile.FileName);
+        }
+
         //protected override void Dispose(bool disposing)
         //{
         //    if (disposing)

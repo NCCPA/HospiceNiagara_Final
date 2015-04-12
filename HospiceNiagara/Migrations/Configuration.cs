@@ -1,6 +1,9 @@
 namespace HospiceNiagara.Migrations
 {
+    using HospiceNiagara.Models;
     using HospiceNiagara.Models.DatabaseModels;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -9,6 +12,9 @@ namespace HospiceNiagara.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<HospiceNiagara.Models.ApplicationDbContext>
     {
+        private UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        private RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -17,6 +23,14 @@ namespace HospiceNiagara.Migrations
 
         protected override void Seed(HospiceNiagara.Models.ApplicationDbContext context)
         {
+            ApplicationUser newUser = new ApplicationUser ();
+            newUser.UserName = "morozoandrei@gmail.com";
+            newUser.Email = "morozoandrei@gmail.com";
+            newUser.FirstName = "Andrei";
+            newUser.LastName = "Morozov";
+            newUser.PhoneNumber = "9053413711";
+            UserManager.Create(newUser, "Pass!23");
+           
 
             //Add Announcement
             var announcement = new List<Announcement>

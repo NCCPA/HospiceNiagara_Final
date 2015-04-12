@@ -1,6 +1,7 @@
 ﻿jQuery(document).ready(function () {
 
-    
+   
+
    $("#menu-toggle").click(function(e) {
        e.preventDefault();
        $("#wrapper").toggleClass("toggled");
@@ -35,4 +36,7 @@
            $(this).css('font-size', parseInt($(this).css('font-size').replace(/px$/, '')) - 1 + "px");
        });
    });
+
+    
+
 });
