@@ -431,3 +431,8 @@ hr {
     background-color:#fff !important;
     border-color:none !important;
 }
+
+.form-horizontal {
+    background-color:#e9eaea;
+    padding:25px;    
+}

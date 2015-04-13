@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace HospiceNiagara.Controllers
 {
@@ -176,6 +177,43 @@ namespace HospiceNiagara.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult addRole(string[] selectedRoles)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            
+
+            var roles = db.Roles.ToList();
+
+
+
+
+            foreach(var r in selectedRoles)
+            {
+                foreach(var x in roles.ToList())
+                {
+                    if (x.Id == r || x.Name == "SuperAdmin")
+                    {
+                        roles.Remove(x);
+                    }
+                }
+            }
+
+
+
+
+
+            return Json(roles);
+        }
+
+        [HttpPost]
+        public JsonResult SubRoles(string roleID)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var subRoles = db.SubRoles.Where(x => x.RoleID == roleID);
+            return Json(subRoles.ToList());
+        }
+
         //
         // GET: /Account/Register
         [Authorize(Roles="Admin")]
@@ -187,12 +225,13 @@ namespace HospiceNiagara.Controllers
             
             HelperClass helperClass = new HelperClass();
 
-            //allow selected drop down list to be volunteer
-            var selectedValue = helperClass.GetRoleValueByName("Volunteer");
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", selectedValue);            
+            //allow selected drop down list to be volunteer            
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name).Where(x => x.Name != "SuperAdmin"), "ID", "Name");
+            SelectListItem allOption = new SelectListItem() { Value = "0", Text = "Select A Main Role" };
 
             //assign roles to a list
             var rolelist = roles.ToList();
+            rolelist.Insert(0, allOption);
             ViewBag.RolesList = rolelist;            
             return View();
         }
@@ -205,10 +244,11 @@ namespace HospiceNiagara.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model, string roleID)
         {            
             ApplicationDbContext db = new ApplicationDbContext();
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);
-
+                        
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);            
             //assign roles to a list
             var rolelist = roles.ToList();
+            
             ViewBag.RolesList = rolelist;      
 
             if (ModelState.IsValid)
