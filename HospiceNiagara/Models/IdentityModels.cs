@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using HospiceNiagara.Models.DatabaseModels;
 using System.Web.Mvc;
 using HospiceNiagara.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace HospiceNiagara.Models
 {
@@ -54,6 +55,8 @@ namespace HospiceNiagara.Models
         public byte[] ProfilePicture { get; set; }
         public string MimeType { get; set; }
 
+
+        public virtual ICollection<SubRoles> SubRoles { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

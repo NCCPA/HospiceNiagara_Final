@@ -277,6 +277,10 @@
     <Compile Include="Migrations\201504122133083_required_SubRole_Name_Added.Designer.cs">
       <DependentUpon>201504122133083_required_SubRole_Name_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504132312097_Users_SubRoles_Many-To-Many.cs" />
+    <Compile Include="Migrations\201504132312097_Users_SubRoles_Many-To-Many.Designer.cs">
+      <DependentUpon>201504132312097_Users_SubRoles_Many-To-Many.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DatabaseModels\Announcement.cs" />
@@ -559,6 +563,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504122133083_required_SubRole_Name_Added.resx">
       <DependentUpon>201504122133083_required_SubRole_Name_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504132312097_Users_SubRoles_Many-To-Many.resx">
+      <DependentUpon>201504132312097_Users_SubRoles_Many-To-Many.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

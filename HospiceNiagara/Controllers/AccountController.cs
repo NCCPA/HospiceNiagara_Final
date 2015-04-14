@@ -182,12 +182,7 @@ namespace HospiceNiagara.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             
-
             var roles = db.Roles.ToList();
-
-
-
-
             foreach(var r in selectedRoles)
             {
                 foreach(var x in roles.ToList())
@@ -198,11 +193,6 @@ namespace HospiceNiagara.Controllers
                     }
                 }
             }
-
-
-
-
-
             return Json(roles);
         }
 
@@ -241,14 +231,13 @@ namespace HospiceNiagara.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, string roleID)
+        public async Task<ActionResult> Register(RegisterViewModel model, string[] roleID, string[] subRolesList)
         {            
             ApplicationDbContext db = new ApplicationDbContext();
                         
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);            
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");            
             //assign roles to a list
-            var rolelist = roles.ToList();
-            
+            var rolelist = roles.ToList();            
             ViewBag.RolesList = rolelist;      
 
             if (ModelState.IsValid)
@@ -313,10 +302,47 @@ namespace HospiceNiagara.Controllers
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-                    var roleName = roleManager.FindById(model.RoleID).Name;
-                    var userID = userManager.FindByEmail(model.Email).Id;
-                    UserManager.AddToRole(userID, roleName);
 
+                    
+
+                    
+                    var userID = userManager.FindByEmail(model.Email).Id;
+
+                    for (int i = 0; i < roleID.Length; i++)
+                    {
+                        var roleName = roleManager.FindById(roleID[i]).Name;
+                        userManager.AddToRole(userID, roleName);
+                    }
+
+                    //grab current User
+                    ApplicationUser userToUpdate = db.Users.Where(x => x.Id == userID).Single();
+
+                    //set up variables to user and check each other
+                    var selectedSubRoles = new HashSet<string>(subRolesList);
+                    var userSubRoles = new HashSet<int>(userToUpdate.SubRoles.Select(x => x.ID));
+
+                    foreach (var subRole in db.SubRoles)
+                    {
+                        if (selectedSubRoles.Contains(subRole.ID.ToString()))
+                        {
+                            if (!userSubRoles.Contains(subRole.ID))
+                            {
+                                userToUpdate.SubRoles.Add(subRole);
+                            }
+                        }
+                    }
+
+                    db.SaveChanges();
+
+                    //use for later 
+                    /*
+                     else {
+                     *  if (userSubRoles.Contains(subRole.ID))
+                     *      {
+                     *          userToUpdate.SubRoles.Remove(subRole);
+                     *      }
+                     * }
+                    */
                     return RedirectToAction("Index", "AdminMembers");
                 }
                 AddErrors(result);
