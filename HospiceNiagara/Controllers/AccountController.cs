@@ -214,7 +214,8 @@ namespace HospiceNiagara.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var subRoles = db.SubRoles.Where(x => x.RoleID == roleID);
-            return Json(subRoles.ToList());
+            var subRolesList = subRoles.ToList();
+            return Json(subRolesList);
         }
 
         //

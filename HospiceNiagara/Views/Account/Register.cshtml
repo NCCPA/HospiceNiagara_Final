@@ -8,9 +8,9 @@
 
 <style>
     .form-horizontal {
-    background-color:#e9eaea;
-    padding:25px;    
-}
+        background-color: #e9eaea;
+        padding: 25px;
+    }
 </style>
 
 <div class="row">
@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="tab-pane" id="tab3">
-
+                        <div id="errorList" class="text-danger"></div>
                         <div id="reviewTab">
                             <!-- From AJAX, jquery bring in here the information form the inputted fields-->
                         </div>
@@ -160,7 +160,7 @@
 
         //increment for add ANother Main Role
         var counter = 0;
-
+               
         //hide buttons until changed it from select a main role
         $('#addRole').hide();
         $('#removeRole').hide();
@@ -173,77 +173,85 @@
                 $('#rootwizard').find('.bar').css({ width: $percent + '%' });
             }
         });
-
-
-        //Permissions role changes then send a getmethod to database and return array of items in that roleID
-        $('[name="roleID"]').change(function () {
-
-            if ($('#RolesList:selected').val() != 0) {
-                $('#addRole').show();
-            }
-            if ($('#RolesList:selected').val() == 0) {
-                $('#addRole').hide();
-            }
-
-            $.post("/Account/SubRoles", { roleID: $(this).val()}, function (r) {
-                var jsonSubRoles = JSON.stringify(r);
-                var subRolesObject = JSON.parse(jsonSubRoles);
-                var checkboxList = "";
-
-                for (var i = 0; i < r.length; i++) {
-                    checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
-                }
-
-                $("#subRoles0").html(checkboxList);
-
-            }, "JSON");
-
-        });
-
-        $(document).ajaxComplete(function () {
+    
+            //Permissions role changes then send a getmethod to database and return array of items in that roleID
             $('[name="roleID"]').change(function () {
-
-                if ($('#RolesList :selected').val() != 0) {
+                
+                if ($('#RolesList:selected').val() != 0) {
                     $('#addRole').show();
                 }
-                if ($('#RolesList :selected').val() == 0) {
+                if ($('#RolesList:selected').val() == 0) {
                     $('#addRole').hide();
                 }
 
-                var currentRoles = $('[name = "roleID"]');
-                var currentRolesID = [];
-                for (var i = 0; i < currentRoles.length; i++) {
-                    currentRolesID[i] = currentRoles[i].value;
-                }
-
-                var checkboxList = "";
-                $.post("/Account/SubRoles", { roleID: $(this).val()}, function (r) {
-
-
+                $.post("/Account/SubRoles", { roleID: $(this).val() }, function (r) {
                     var jsonSubRoles = JSON.stringify(r);
                     var subRolesObject = JSON.parse(jsonSubRoles);
+                    var checkboxList = "";
 
                     for (var i = 0; i < r.length; i++) {
                         checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
                     }
+                    
+                    
+                    $("#subRoles0").html(checkboxList);
 
-
-
-                    $("#subRoles" + counter).html(checkboxList);
-
-                }, "JSON");
-
-
+                });
 
             });
-        });
+        
+            $(document).ajaxComplete(function () {
 
+                $('[name="roleID"]').change(function () {
+
+                    if ($('#RolesList :selected').val() != 0) {
+                        $('#addRole').show();
+                    }
+                    if ($('#RolesList :selected').val() == 0) {
+                        $('#addRole').hide();
+                    }
+
+                    var currentRoles = $('[name = "roleID"]');
+                    var currentRolesID = [];
+                    for (var i = 0; i < currentRoles.length; i++) {
+                        currentRolesID[i] = currentRoles[i].value;
+                    }
+
+                    
+
+                    var checkboxList = "";
+                    $.post("/Account/SubRoles", { roleID: $(this).val() }, function (r) {
+
+                        var jsonSubRoles = JSON.stringify(r);
+                        var subRolesObject = JSON.parse(jsonSubRoles);
+
+                        for (var i = 0; i < r.length; i++) {
+                            checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
+                        }
+
+                        $("#subRoles" + counter).html(checkboxList);
+                    });
+                });
+            });       
+
+
+        $("#registerForm").submit(function (e) {
+            var subRolesChecked = $("input:checked");
+
+            if (subRolesChecked.length == 0) {
+                var ErrorList = "User must be selected into a subrole";                
+                $("#errorList").html(ErrorList);
+                e.preventDefault();
+            }
+
+           
+
+        });
 
         // Button Click to add Another Drop Down List
         $("#addRole").click(function () {
 
             counter++;// new div number that attaches to each new drop downlist
-
 
             var currentRoles = $('[name = "roleID"]');
             var currentRolesID = [];
@@ -253,7 +261,6 @@
 
 
             $.post("/Account/addRole", { selectedRoles: currentRolesID }, function (r) {
-
 
                 var jsonSubRoles = JSON.stringify(r);
                 var subRolesObject = JSON.parse(jsonSubRoles);
@@ -277,6 +284,8 @@
                 }
 
             }, "JSON");
+
+            
         });
 
 
@@ -333,7 +342,7 @@
         reviewInfo += '<h3 class="text-center">Permissions</h3>'
 
         //Select all RoleID (Drop Down List)
-        var mainRoles = $('[name="roleID"] :selected');        
+        var mainRoles = $('[name="roleID"] :selected');
 
         //Loop through each drop down list selected value and output
         $.each(mainRoles, function (index, value) {
@@ -345,13 +354,13 @@
         //Sub Roles Selected do it in a list
         var subRolesChecked = $('[name="subRolesList"]');
 
-        reviewInfo += '<ul>';
+        reviewInfo += '<label class="col-md-3 control-label">Sub Role(s):</label><br /><br /><ul>';
 
         if (subRolesChecked != null) {
 
             for (var i = 0; i < subRolesChecked.length; i++) {
 
-                if (subRolesChecked[i].checked) {                    
+                if (subRolesChecked[i].checked) {
 
                     reviewInfo += '<li>' + $('[name="subRolesList"][value="' + subRolesChecked[i].value + '"]').prev('label').text() + '</li>';
 

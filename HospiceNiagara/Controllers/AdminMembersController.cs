@@ -163,7 +163,10 @@ namespace HospiceNiagara.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            }            
+
+
+
             ApplicationUser memberViewModel = db.Users.Find(id);
 
             //get roles and add to list
@@ -199,10 +202,23 @@ namespace HospiceNiagara.Controllers
             //check email, if 0 users have this email OR this users current owns this email allow him to update.
             if ( selectedUser.Count() == 0 ||  helperClass.CurrentEmail(memberViewModel.Id, memberViewModel.Email))
             {
+                //grab single entity
+                var editUser = selectedUser.FirstOrDefault();
 
-                //if they own the currently selected email, then add the required username to it.
-                memberViewModel.UserName = memberViewModel.Email;
-                db.Entry(memberViewModel).State = EntityState.Modified;
+                //edit the fields that apply to them
+                editUser.FirstName = memberViewModel.FirstName;
+                editUser.LastName = memberViewModel.LastName;
+                editUser.Email = memberViewModel.Email;
+                editUser.UserName = memberViewModel.Email; //username same as email change it
+                editUser.PhoneExt = memberViewModel.PhoneNumber;
+                editUser.PhoneExt = memberViewModel.PhoneExt;
+                editUser.IsContact = memberViewModel.IsContact;
+                editUser.isActive = memberViewModel.isActive;
+                editUser.Position = memberViewModel.Position;
+                editUser.PositionDescription = memberViewModel.PositionDescription;
+                editUser.Bio = memberViewModel.Bio;
+                
+                //save the changed made
                 SaveChanges(db);
 
                 //Removes user from old role, adds to new role
