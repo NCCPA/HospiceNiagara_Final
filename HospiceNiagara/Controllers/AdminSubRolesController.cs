@@ -17,16 +17,39 @@ namespace HospiceNiagara.Controllers
         private HelperClass helperClass = new HelperClass();
 
         // GET: AdminSubRoles
+        [HttpGet]
         public ActionResult Index()
         {
             //Get all roles from db
             SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name).Where(x => x.Name != "SuperAdmin"), "ID", "Name");
             var roleList = roles.ToList();
+            
+            //add to rolelist select a role option
+            SelectListItem allOption = new SelectListItem() { Value = "0", Text = "Select A Role" };
+            roleList.Insert(0, allOption);
+            ViewBag.RolesList = roleList;            
 
+           
+            
+
+            return View(db.SubRoles.Where(x=>x.Name == "SelectARole").ToList());
+        }
+
+        // POST: AdminSubRoles
+        [HttpPost]
+        public ActionResult Index(string roleID)
+        {
+            //Take care of drop down list
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name).Where(x => x.Name != "SuperAdmin"), "ID", "Name", roleID);
+            var roleList = roles.ToList();
             ViewBag.RolesList = roleList;
 
-            return View(db.SubRoles.ToList());
+            //get model with those specific roleID
+            var foundRoles = db.SubRoles.Where(x => x.RoleID == roleID);
+
+            return View(foundRoles.ToList());
         }
+
 
         // GET: AdminSubRoles/Details/5
         public ActionResult Details(int? id)
@@ -82,15 +105,13 @@ namespace HospiceNiagara.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            //Get all roles from db
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name).Where(x => x.Name != "SuperAdmin"), "ID", "Name");
-            var roleList = roles.ToList();
-            ViewBag.RolesList = roleList;
-
-
-         
             SubRoles subRoles = db.SubRoles.Find(id);
+
+
+
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name).Where(x => x.Name != "SuperAdmin"), "ID", "Name", subRoles.RoleID);
+            ViewBag.RolesList = roles.ToList();         
+           
             if (subRoles == null)
             {
                 return HttpNotFound();

@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace HospiceNiagara.Controllers
 {
@@ -21,6 +22,7 @@ namespace HospiceNiagara.Controllers
     {
         private ApplicationUserManager _userManager;        
         private HelperClass helperClass = new HelperClass();
+
 
         public AccountController()
         {
@@ -78,7 +80,19 @@ namespace HospiceNiagara.Controllers
                 return View(model);
             }
 
-            
+            //if user not activated dont let them login
+
+            ApplicationUser userObj = UserManager.FindByEmail(model.Email);
+
+            if (userObj != null)
+            {
+                if (!userObj.isActive)
+                {
+                    ModelState.AddModelError("PermissionDenied", "Your Account is deactivated, contact Hospice Niagara admin for further information");
+                    return View(model);
+                }
+            }
+
 
             // current email is not confirmed in the database
             if (helperClass.isValidUser(model.Email,model.Password))
@@ -176,6 +190,33 @@ namespace HospiceNiagara.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult addRole(string[] selectedRoles)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            
+            var roles = db.Roles.ToList();
+            foreach(var r in selectedRoles)
+            {
+                foreach(var x in roles.ToList())
+                {
+                    if (x.Id == r || x.Name == "SuperAdmin")
+                    {
+                        roles.Remove(x);
+                    }
+                }
+            }
+            return Json(roles);
+        }
+
+        [HttpPost]
+        public JsonResult SubRoles(string roleID)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var subRoles = db.SubRoles.Where(x => x.RoleID == roleID);
+            return Json(subRoles.ToList());
+        }
+
         //
         // GET: /Account/Register
         [Authorize(Roles="Admin")]
@@ -187,12 +228,13 @@ namespace HospiceNiagara.Controllers
             
             HelperClass helperClass = new HelperClass();
 
-            //allow selected drop down list to be volunteer
-            var selectedValue = helperClass.GetRoleValueByName("Volunteer");
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", selectedValue);            
+            //allow selected drop down list to be volunteer            
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name).Where(x => x.Name != "SuperAdmin"), "ID", "Name");
+            SelectListItem allOption = new SelectListItem() { Value = "0", Text = "Select A Main Role" };
 
             //assign roles to a list
             var rolelist = roles.ToList();
+            rolelist.Insert(0, allOption);
             ViewBag.RolesList = rolelist;            
             return View();
         }
@@ -202,13 +244,13 @@ namespace HospiceNiagara.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, string roleID)
+        public async Task<ActionResult> Register(RegisterViewModel model, string[] roleID, string[] subRolesList)
         {            
             ApplicationDbContext db = new ApplicationDbContext();
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", roleID);
-
+                        
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");            
             //assign roles to a list
-            var rolelist = roles.ToList();
+            var rolelist = roles.ToList();            
             ViewBag.RolesList = rolelist;      
 
             if (ModelState.IsValid)
@@ -226,7 +268,7 @@ namespace HospiceNiagara.Controllers
 
                 //Generate Random Password
                 string generatedPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
-                         
+                                
 
                 var user = new ApplicationUser
                 {
@@ -239,7 +281,8 @@ namespace HospiceNiagara.Controllers
                     IsContact = model.IsContact,
                     Position = model.Position,
                     PositionDescription = model.PositionDescription,
-                    Bio = model.Bio
+                    Bio = model.Bio,
+                    isActive = true
                 };
 
                 var result = await UserManager.CreateAsync(user, generatedPassword);
@@ -273,10 +316,47 @@ namespace HospiceNiagara.Controllers
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-                    var roleName = roleManager.FindById(model.RoleID).Name;
-                    var userID = userManager.FindByEmail(model.Email).Id;
-                    UserManager.AddToRole(userID, roleName);
 
+                    
+
+                    
+                    var userID = userManager.FindByEmail(model.Email).Id;
+
+                    for (int i = 0; i < roleID.Length; i++)
+                    {
+                        var roleName = roleManager.FindById(roleID[i]).Name;
+                        userManager.AddToRole(userID, roleName);
+                    }
+
+                    //grab current User
+                    ApplicationUser userToUpdate = db.Users.Where(x => x.Id == userID).Single();
+
+                    //set up variables to user and check each other
+                    var selectedSubRoles = new HashSet<string>(subRolesList);
+                    var userSubRoles = new HashSet<int>(userToUpdate.SubRoles.Select(x => x.ID));
+
+                    foreach (var subRole in db.SubRoles)
+                    {
+                        if (selectedSubRoles.Contains(subRole.ID.ToString()))
+                        {
+                            if (!userSubRoles.Contains(subRole.ID))
+                            {
+                                userToUpdate.SubRoles.Add(subRole);
+                            }
+                        }
+                    }
+
+                    db.SaveChanges();
+
+                    //use for later 
+                    /*
+                     else {
+                     *  if (userSubRoles.Contains(subRole.ID))
+                     *      {
+                     *          userToUpdate.SubRoles.Remove(subRole);
+                     *      }
+                     * }
+                    */
                     return RedirectToAction("Index", "AdminMembers");
                 }
                 AddErrors(result);

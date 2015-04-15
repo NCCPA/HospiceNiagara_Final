@@ -14,9 +14,11 @@ namespace HospiceNiagara.Models.DatabaseModels
         [Display(Name="Sub Role Name")]
         [Required]
         public string Name { get; set; }
+        
 
         public string RoleID { get; set; }
 
+        public virtual ICollection<ApplicationUser> User { get; set; }
         public virtual ICollection<IdentityRole> Roles { get; set; }
     }
 }

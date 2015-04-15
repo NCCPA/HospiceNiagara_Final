@@ -66,18 +66,47 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsContact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">user activated</label>            
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsContact)
-                    @Html.ValidationMessageFor(model => model.IsContact, "", new { @class = "text-danger" })
-                </div>
+                <select name="isActive" class="form-control">
+                    @if (Model.isActive)
+                    {
+                        <option value="true" selected>Yes</option>
+                        <option value="false">No</option>
+                    }
+                    else
+                    {
+                        <option value="true">Yes</option>
+                        <option value="false" selected>No</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsContact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">                
+                    <select name="isContact" class="form-control">
+                        @if (Model.IsContact)
+                        {
+                            <option value="true" selected>Yes</option>
+                            <option value="false" >No</option>
+                        }
+                        else
+                        {
+                            <option value="true">Yes</option>
+                            <option value="false" selected>No</option>
+                        }
+                    </select>                   
+                    @Html.ValidationMessageFor(model => model.IsContact, "", new { @class = "text-danger" })                
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+
                 @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
             </div>
@@ -85,7 +114,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PositionDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10">               
                 @Html.EditorFor(model => model.PositionDescription, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PositionDescription, "", new { @class = "text-danger" })
             </div>

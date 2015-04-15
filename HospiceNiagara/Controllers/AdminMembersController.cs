@@ -183,7 +183,7 @@ namespace HospiceNiagara.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,IsContact,Position,PositionDescription,Bio")] ApplicationUser memberViewModel, string roleID)
+        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,Email,PhoneNumber,PhoneExt,IsContact,isActive,Position,PositionDescription,Bio")] ApplicationUser memberViewModel, string roleID)
         {
             //get roles and add to list
             ViewBag.RolesList = helperClass.getRolesList(memberViewModel.Id);

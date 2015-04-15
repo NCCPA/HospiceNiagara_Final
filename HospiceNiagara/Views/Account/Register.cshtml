@@ -6,90 +6,375 @@
 <link href="~/Content/register_page.css" rel="stylesheet" />
 
 
+<style>
+    .form-horizontal {
+    background-color:#e9eaea;
+    padding:25px;    
+}
+</style>
+
 <div class="row">
 
-    <div class="col-md-4 col-sm-6 col-sm-offset-3 col-md-offset-4" id="login-content">
+    <div class="col-md-6 col-sm-6 col-sm-offset-3 col-md-offset-4" id="login-content">
 
-    <h2>@ViewBag.Title.</h2>
+        <h2>@ViewBag.Title.</h2>
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-        @Html.AntiForgeryToken()
         <h4>Create a new account.</h4>
         <hr />
 
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-3">Main Role: </label>
-            <div class="col-md-9">
-                @Html.DropDownList("RolesList", null, htmlAttributes: new { @class = "form-control", @Name = "roleID" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.PhoneExt, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.PhoneExt, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Position, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.PositionDescription, new { @class = "col-md-3 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.PositionDescription, new { @class = "form-control" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <input type="submit" class="btn btn-default btn-success btn-block" value="Register" />
-            </div>
-        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerForm" }))
+        {
 
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <input type="button" onclick="goBack()" class="btn btn-default btn-block btn-danger" value="Cancel" />
+            <div id="rootwizard">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <ul>
+                                <li><a href="#tab1" data-toggle="tab"><i id="errorTab"></i> 1. Member Information</a></li>
+                                <li><a href="#tab2" data-toggle="tab">2. Add Permissions</a></li>
+                                <li><a href="#tab3" data-toggle="tab">3. Review Session</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bar" class="progress">
+                    <div class="bar progress-bar"></div>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane" id="tab1">
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PhoneExt, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.PhoneExt, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IsContact, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                <select name="isContact" class="form-control">
+                                    <option value="false">No</option>
+                                    <option value="true">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Position, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PositionDescription, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.PositionDescription, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Main Role: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("RolesList", null, htmlAttributes: new { @class = "form-control", @Name = "roleID" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="subRoles0"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-default" id="addRole" value="Add Another Main Role" />
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-warning" id="removeRole" value="Remove Main Role" />
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab3">
+
+                        <div id="reviewTab">
+                            <!-- From AJAX, jquery bring in here the information form the inputted fields-->
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="submit" class="btn btn-default btn-primary btn-block" value="Register" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <ul class="pager wizard" id="pagerBottom">
+                        <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                        <li class="previous"><a href="#" class="btn btn-primary btn-lg">Previous</a></li>
+                        <li class="next last" style="display:none;"><a href="#" class="btn btn-primary">Last</a></li>
+                        <li class="next"><a href="#" class="btn btn-primary btn-lg">Next</a></li>
+                    </ul>
                 </div>
             </div>
-                }
 
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="button" onclick="goBack()" class="btn btn-default btn-block btn-danger" value="Cancel" />
+                </div>
             </div>
-        </div>
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
+            @Html.AntiForgeryToken()
         }
 
-        <script>
-            function goBack() {
-                window.history.back();
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(document).ready(function () {
+
+        //increment for add ANother Main Role
+        var counter = 0;
+
+        //hide buttons until changed it from select a main role
+        $('#addRole').hide();
+        $('#removeRole').hide();
+
+        $('#rootwizard').bootstrapWizard({
+            onTabShow: function (tab, navigation, index) {
+                var $total = navigation.find('li').length;
+                var $current = index + 1;
+                var $percent = ($current / $total) * 100;
+                $('#rootwizard').find('.bar').css({ width: $percent + '%' });
             }
-        </script>
+        });
+
+
+        //Permissions role changes then send a getmethod to database and return array of items in that roleID
+        $('[name="roleID"]').change(function () {
+
+            if ($('#RolesList:selected').val() != 0) {
+                $('#addRole').show();
+            }
+            if ($('#RolesList:selected').val() == 0) {
+                $('#addRole').hide();
+            }
+
+            $.post("/Account/SubRoles", { roleID: $(this).val()}, function (r) {
+                var jsonSubRoles = JSON.stringify(r);
+                var subRolesObject = JSON.parse(jsonSubRoles);
+                var checkboxList = "";
+
+                for (var i = 0; i < r.length; i++) {
+                    checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
+                }
+
+                $("#subRoles0").html(checkboxList);
+
+            }, "JSON");
+
+        });
+
+        $(document).ajaxComplete(function () {
+            $('[name="roleID"]').change(function () {
+
+                if ($('#RolesList :selected').val() != 0) {
+                    $('#addRole').show();
+                }
+                if ($('#RolesList :selected').val() == 0) {
+                    $('#addRole').hide();
+                }
+
+                var currentRoles = $('[name = "roleID"]');
+                var currentRolesID = [];
+                for (var i = 0; i < currentRoles.length; i++) {
+                    currentRolesID[i] = currentRoles[i].value;
+                }
+
+                var checkboxList = "";
+                $.post("/Account/SubRoles", { roleID: $(this).val()}, function (r) {
+
+
+                    var jsonSubRoles = JSON.stringify(r);
+                    var subRolesObject = JSON.parse(jsonSubRoles);
+
+                    for (var i = 0; i < r.length; i++) {
+                        checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
+                    }
+
+
+
+                    $("#subRoles" + counter).html(checkboxList);
+
+                }, "JSON");
+
+
+
+            });
+        });
+
+
+        // Button Click to add Another Drop Down List
+        $("#addRole").click(function () {
+
+            counter++;// new div number that attaches to each new drop downlist
+
+
+            var currentRoles = $('[name = "roleID"]');
+            var currentRolesID = [];
+            for (var i = 0; i < currentRoles.length; i++) {
+                currentRolesID[i] = currentRoles[i].value;
+            }
+
+
+            $.post("/Account/addRole", { selectedRoles: currentRolesID }, function (r) {
+
+
+                var jsonSubRoles = JSON.stringify(r);
+                var subRolesObject = JSON.parse(jsonSubRoles);
+
+                var output = '<div class="form-group" id="ddl' + counter + '"><hr style="width:50%;"/><label class="control-label col-md-3">Main Role:</label><div class="col-md-9"> <select name="roleID" class="form-control">';
+                output += '<option value="0">Select an Main Role</option>';
+                for (var i = 0; i < r.length; i++) {
+                    output += '<option value="' + r[i].Id + '" >' + r[i].Name + '</option>';
+                }
+
+                output += '</div></select></div></div>';
+                output += '<div class="form-group" id="subRolesCounter' + counter + '"><div id="subRoles' + counter + '"></div></div>';
+                $("#addRole").before(output);
+
+
+                if (counter > 0) {
+                    $('#removeRole').show();
+                }
+                else {
+                    $('#removeRole').hide();
+                }
+
+            }, "JSON");
+        });
+
+
+        $("#removeRole").click(function () {
+
+            //remove html drop down + subRoles
+            $('#ddl' + counter).remove();
+            $('#subRolesCounter' + counter).remove();
+
+            counter--;
+            if (counter > 0) {
+                $('#removeRole').show();
+            }
+            else {
+                $('#removeRole').hide();
+            }
+
+        });
+
+    });
+
+
+    $("#pagerBottom, [data-toggle='tab']").click(function () {
+        var reviewInfo = '<h3 class="text-center">Member Information</h3>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Email:</label><label class="control-label">' + $('#Email').val() + '</label>' +
+                    '</div>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">First Name:</label><label class="control-label">' + $('#FirstName').val() + '</label>' +
+                    '</div>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Last Name:</label><label class="control-label">' + $('#LastName').val() + '</label>' +
+                    '</div>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Phone Number :</label><label class="control-label">' + $('#PhoneNumber').val() + '</label>' +
+                    '</div>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Phone Extension:</label><label class="control-label">' + $('#PhoneExt').val() + '</label>' +
+                    '</div>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Position Title:</label><label class="control-label">' + $('#Position').val() + '</label>' +
+                    '</div>';
+
+        reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Position Description:</label><label class="control-label">' + $('#PositionDescription').val() + '</label>' +
+                    '</div> <hr />';
+
+        reviewInfo += '<h3 class="text-center">Permissions</h3>'
+
+        //Select all RoleID (Drop Down List)
+        var mainRoles = $('[name="roleID"] :selected');        
+
+        //Loop through each drop down list selected value and output
+        $.each(mainRoles, function (index, value) {
+            reviewInfo += '<div class="form-group">' +
+                    '<label class="col-md-3 control-label">Main Role(s):</label><label class="control-label">' + value.text + '</label>' +
+                    '</div>';
+        });
+
+        //Sub Roles Selected do it in a list
+        var subRolesChecked = $('[name="subRolesList"]');
+
+        reviewInfo += '<ul>';
+
+        if (subRolesChecked != null) {
+
+            for (var i = 0; i < subRolesChecked.length; i++) {
+
+                if (subRolesChecked[i].checked) {                    
+
+                    reviewInfo += '<li>' + $('[name="subRolesList"][value="' + subRolesChecked[i].value + '"]').prev('label').text() + '</li>';
+
+
+                }
+                //reviewInfo += '<li>' + subRolesChecked[i] + '</li>'
+
+
+            }
+        }
+
+        reviewInfo += '</ul>';
+
+        $('#reviewTab').html(reviewInfo);
+
+    });
+
+
+
+
+
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
