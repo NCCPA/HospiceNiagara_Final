@@ -17,7 +17,7 @@
                 @Html.AntiForgeryToken()
                 <br />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger col-md-offset-1" })
-
+                @Html.ValidationMessage("PermissionDenied", new { @class = "text-danger" })
                     <!-- E-mail with icon-->
                 <div class="form-group login-email">
                     <div class="error-message">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger col-md-offset-2 " })</div>

@@ -23,6 +23,7 @@ namespace HospiceNiagara.Controllers
         private ApplicationUserManager _userManager;        
         private HelperClass helperClass = new HelperClass();
 
+
         public AccountController()
         {
         }
@@ -79,7 +80,19 @@ namespace HospiceNiagara.Controllers
                 return View(model);
             }
 
-            
+            //if user not activated dont let them login
+
+            ApplicationUser userObj = UserManager.FindByEmail(model.Email);
+
+            if (userObj != null)
+            {
+                if (!userObj.isActive)
+                {
+                    ModelState.AddModelError("PermissionDenied", "Your Account is deactivated, contact Hospice Niagara admin for further information");
+                    return View(model);
+                }
+            }
+
 
             // current email is not confirmed in the database
             if (helperClass.isValidUser(model.Email,model.Password))
@@ -255,7 +268,7 @@ namespace HospiceNiagara.Controllers
 
                 //Generate Random Password
                 string generatedPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
-                         
+                                
 
                 var user = new ApplicationUser
                 {
@@ -268,7 +281,8 @@ namespace HospiceNiagara.Controllers
                     IsContact = model.IsContact,
                     Position = model.Position,
                     PositionDescription = model.PositionDescription,
-                    Bio = model.Bio
+                    Bio = model.Bio,
+                    isActive = true
                 };
 
                 var result = await UserManager.CreateAsync(user, generatedPassword);
