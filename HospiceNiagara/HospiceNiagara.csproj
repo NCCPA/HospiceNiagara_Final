@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AdminFoldersController.cs" />
     <Compile Include="Controllers\AdminMeetingsController.cs" />
     <Compile Include="Controllers\AdminMembersController.cs" />
+    <Compile Include="Controllers\AdminScheduleController.cs" />
     <Compile Include="Controllers\AdminSubRolesController.cs" />
     <Compile Include="HelperClass.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -296,8 +297,10 @@
     <Compile Include="Models\ViewModels\AnnouncementViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModels\CalenderViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\FolderViewModel.cs" />
+    <Compile Include="Models\ViewModels\mainRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\MemberViewModel.cs" />
     <Compile Include="Models\ViewModels\RolesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -310,6 +313,8 @@
     <Content Include="Content\bootstrap-fileinput\img\loading.gif" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Content\fullcalendar.print.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login_page.css" />
     <Content Include="Content\PagedList.css" />
@@ -377,6 +382,9 @@
     <Content Include="Scripts\fileinput_locale_ru.js" />
     <Content Include="Scripts\fileinput_locale_th.js" />
     <Content Include="Scripts\fileinput_locale_uk.js" />
+    <Content Include="Scripts\fullcalendar.js" />
+    <Content Include="Scripts\fullcalendar.min.js" />
+    <Content Include="Scripts\gcal.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.bootstrap.wizard.js" />
@@ -393,6 +401,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -452,7 +464,6 @@
     <Content Include="Views\AdminMeetings\Details.cshtml" />
     <Content Include="Views\AdminMeetings\Edit.cshtml" />
     <Content Include="Views\AdminMeetings\Index.cshtml" />
-    <Content Include="Views\AdminMembers\Create.cshtml" />
     <Content Include="Views\AdminMembers\Delete.cshtml" />
     <Content Include="Views\AdminMembers\Details.cshtml" />
     <Content Include="Views\AdminMembers\Edit.cshtml" />
@@ -489,6 +500,7 @@
     <Content Include="Views\AdminSubRoles\Create.cshtml" />
     <Content Include="Views\AdminSubRoles\Delete.cshtml" />
     <Content Include="Views\AdminSubRoles\Edit.cshtml" />
+    <Content Include="Views\AdminSchedule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

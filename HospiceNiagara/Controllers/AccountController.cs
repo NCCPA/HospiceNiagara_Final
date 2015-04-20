@@ -74,9 +74,7 @@ namespace HospiceNiagara.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
-            {
-                
-
+            {               
                 return View(model);
             }
 
@@ -190,7 +188,7 @@ namespace HospiceNiagara.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost]        
         public JsonResult addRole(string[] selectedRoles)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -209,18 +207,19 @@ namespace HospiceNiagara.Controllers
             return Json(roles);
         }
 
-        [HttpPost]
+        [HttpPost]        
         public JsonResult SubRoles(string roleID)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var subRoles = db.SubRoles.Where(x => x.RoleID == roleID);
             var subRolesList = subRoles.ToList();
             return Json(subRolesList);
+            
         }
 
         //
         // GET: /Account/Register
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles="Admin")]       
         public ActionResult Register()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -242,8 +241,7 @@ namespace HospiceNiagara.Controllers
 
         //
         // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, string[] roleID, string[] subRolesList)
         {            

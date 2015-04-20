@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Schedule";
+}
+<div class="page-header">
+    <h2>Schedule</h2>
+</div>
+
+<div class="col-md-4">
+    <h2>Controls</h2>
+    <hr />
+</div>
+<div class="col-md-5">
+    <div id="calendar"></div>
+</div>
+
+<!--Calendar Propertiest-->
+<script>
+
+    $(document).ready(function () {
+    
+        //Get Announcements
+       /* $.get("/AdminSchedule/GetAnnouncements", function (r) {
+            alert(JSON.stringify(r, "", 4));
+        },"json");*/
+
+
+
+       /* $(document).ajaxSuccess(function() {
+            alert(announcObj[0].Name);
+        })*/
+
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },            
+            editable: false,            
+            eventLimit: true, // allow "more" link when too many events  
+            timeFormat: '',
+            events: {
+                url: '/AdminSchedule/GetAnnouncements',
+                type: 'GET',
+                error: function () {
+                    alert('there was an error while fetching events!');
+                },                
+                color: 'orange',   // a non-ajax option
+                textColor: 'black' // a non-ajax option
+            }
+        });
+		
+    });
+
+    </script>

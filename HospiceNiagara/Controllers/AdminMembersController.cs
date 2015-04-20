@@ -95,67 +95,16 @@ namespace HospiceNiagara.Controllers
             return View(memberViewModel);
         }
 
-        //THIS IS NOT BEING USED go to accountController/Register for create user
-        // GET: AdminMembers/Create
-        public ActionResult Create()
-        {
-            //Get all roles from db
+        ////POST: AdminMembers/POSTMAINROLES
+        //public JsonResult PostMainRoles()
+        //{
+        //    //Open Database
+        //    ApplicationDbContext db = new ApplicationDbContext();
 
-            //When creating user majority is volunteer so make it selected value
-            var selectedValue = helperClass.GetRoleValueByName("Volunteer");
-
-            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name", selectedValue);
-
-            //assign roles to a list
-            var rolelist = roles.ToList();
-
-            ViewBag.RolesList = rolelist;
-            var member = db.Users.Include(f => f.Roles);
-
-            return View();
-        }
-
-        // POST: AdminMembers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(MemberViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    PhoneExt = model.PhoneExt,
-                    IsContact = model.IsContact,
-                    Position = model.Position,
-                    PositionDescription = model.PositionDescription,
-                    Bio = model.Bio                    
-                };
-
-                //Add & Save
-                db.Users.Add(user);
-                db.SaveChanges();
-
-
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-                
-                var roleName = roleManager.FindById(model.RoleID).Name;
-                var userID = UserManager.FindByEmail(model.Email).Id;
-                UserManager.AddToRole(userID,roleName);
-                                
-                return RedirectToAction("Index", "AdminMembers");
-            }
-
-            return View(model);
-        }
+        //    //grab roles
+        //    //var mainRoles 
+        //    return Json(mainRoles);
+        //}
 
         // GET: AdminMembers/Edit/5
         public ActionResult Edit(string id)
@@ -165,12 +114,10 @@ namespace HospiceNiagara.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }            
 
-
-
             ApplicationUser memberViewModel = db.Users.Find(id);
-
-            //get roles and add to list
-            ViewBag.RolesList = helperClass.getRolesList(id);
+                       
+            SelectList roles = new SelectList(db.Roles.OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.RolesList = roles;
 
             var member = db.Users.Include(f => f.Roles);
             

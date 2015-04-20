@@ -14,6 +14,8 @@ namespace HospiceNiagara
                         "~/Scripts/jquery.timepicker.js",
                         "~/Scripts/fileinput.js",
                         "~/Scripts/jquery.bootstrap.wizard.js",
+                        "~/Scripts/moment.js",
+                        "~/Scripts/fullcalendar.js",
                         "~/Scripts/custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -35,6 +37,7 @@ namespace HospiceNiagara
                       "~/Content/themes/base/theme.css",
                       "~/Content/themes/base/core.css",
                       "~/Content/bootstrap-fileinput/css/fileinput.css",
+                      "~/Content/fullcalendar.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

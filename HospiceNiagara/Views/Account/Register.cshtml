@@ -177,6 +177,7 @@
             //Permissions role changes then send a getmethod to database and return array of items in that roleID
             $('[name="roleID"]').change(function () {
                 
+                //Show Hide button to add/remove 
                 if ($('#RolesList:selected').val() != 0) {
                     $('#addRole').show();
                 }
@@ -184,6 +185,7 @@
                     $('#addRole').hide();
                 }
 
+                //send request for all subroles related to the seleted drop down value
                 $.post("/Account/SubRoles", { roleID: $(this).val() }, function (r) {
                     var jsonSubRoles = JSON.stringify(r);
                     var subRolesObject = JSON.parse(jsonSubRoles);
@@ -191,12 +193,12 @@
 
                     for (var i = 0; i < r.length; i++) {
                         checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
+                        alert(r[i].Name + ", " + r[i].ID);
                     }
-                    
-                    
+                                        
                     $("#subRoles0").html(checkboxList);
 
-                });
+                }, 'json');
 
             });
         
@@ -204,6 +206,7 @@
 
                 $('[name="roleID"]').change(function () {
 
+                    alert($(this).length); // should not hit here until i change another drop down list
                     if ($('#RolesList :selected').val() != 0) {
                         $('#addRole').show();
                     }
@@ -216,21 +219,21 @@
                     for (var i = 0; i < currentRoles.length; i++) {
                         currentRolesID[i] = currentRoles[i].value;
                     }
-
                     
-
                     var checkboxList = "";
                     $.post("/Account/SubRoles", { roleID: $(this).val() }, function (r) {
 
                         var jsonSubRoles = JSON.stringify(r);
                         var subRolesObject = JSON.parse(jsonSubRoles);
 
+                        alert(console.log(subRolesObject));
+
                         for (var i = 0; i < r.length; i++) {
                             checkboxList += '<label class="col-md-offset-1">' + r[i].Name + '</label> <input type="checkbox" name="subRolesList" value="' + r[i].ID + '" /><br />';
                         }
 
                         $("#subRoles" + counter).html(checkboxList);
-                    });
+                    }, 'json');
                 });
             });       
 
@@ -267,6 +270,7 @@
 
                 var output = '<div class="form-group" id="ddl' + counter + '"><hr style="width:50%;"/><label class="control-label col-md-3">Main Role:</label><div class="col-md-9"> <select name="roleID" class="form-control">';
                 output += '<option value="0">Select an Main Role</option>';
+
                 for (var i = 0; i < r.length; i++) {
                     output += '<option value="' + r[i].Id + '" >' + r[i].Name + '</option>';
                 }
@@ -283,7 +287,7 @@
                     $('#removeRole').hide();
                 }
 
-            }, "JSON");
+            }, "json");
 
             
         });
@@ -377,11 +381,6 @@
         $('#reviewTab').html(reviewInfo);
 
     });
-
-
-
-
-
 
     function goBack() {
         window.history.back();
